@@ -16,10 +16,6 @@
 		998CF4E51BB2552C009B50B4 /* SectorMenuUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998CF4E41BB2552C009B50B4 /* SectorMenuUITests.swift */; };
 		998CF4F31BB25B0A009B50B4 /* SectorMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998CF4F21BB25B0A009B50B4 /* SectorMenuItem.swift */; settings = {ASSET_TAGS = (); }; };
 		998CF4F51BB25B32009B50B4 /* SectorMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998CF4F41BB25B32009B50B4 /* SectorMenu.swift */; settings = {ASSET_TAGS = (); }; };
-		998CF4F81BB3BE46009B50B4 /* CGMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998CF4F71BB3BE46009B50B4 /* CGMath.swift */; settings = {ASSET_TAGS = (); }; };
-		998CF4FA1BB3BF2B009B50B4 /* UIColorEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998CF4F91BB3BF2B009B50B4 /* UIColorEx.swift */; settings = {ASSET_TAGS = (); }; };
-		998CF4FC1BB3C126009B50B4 /* CGPointEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998CF4FB1BB3C126009B50B4 /* CGPointEx.swift */; settings = {ASSET_TAGS = (); }; };
-		998CF4FE1BB3C302009B50B4 /* CALayerEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998CF4FD1BB3C302009B50B4 /* CALayerEx.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,10 +51,6 @@
 		998CF4E61BB2552C009B50B4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		998CF4F21BB25B0A009B50B4 /* SectorMenuItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectorMenuItem.swift; sourceTree = "<group>"; };
 		998CF4F41BB25B32009B50B4 /* SectorMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectorMenu.swift; sourceTree = "<group>"; };
-		998CF4F71BB3BE46009B50B4 /* CGMath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGMath.swift; sourceTree = "<group>"; };
-		998CF4F91BB3BF2B009B50B4 /* UIColorEx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorEx.swift; sourceTree = "<group>"; };
-		998CF4FB1BB3C126009B50B4 /* CGPointEx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGPointEx.swift; sourceTree = "<group>"; };
-		998CF4FD1BB3C302009B50B4 /* CALayerEx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CALayerEx.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,10 +135,6 @@
 			children = (
 				998CF4F41BB25B32009B50B4 /* SectorMenu.swift */,
 				998CF4F21BB25B0A009B50B4 /* SectorMenuItem.swift */,
-				998CF4F71BB3BE46009B50B4 /* CGMath.swift */,
-				998CF4F91BB3BF2B009B50B4 /* UIColorEx.swift */,
-				998CF4FB1BB3C126009B50B4 /* CGPointEx.swift */,
-				998CF4FD1BB3C302009B50B4 /* CALayerEx.swift */,
 			);
 			name = SectorMenu;
 			sourceTree = "<group>";
@@ -281,12 +269,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				998CF4FE1BB3C302009B50B4 /* CALayerEx.swift in Sources */,
-				998CF4FA1BB3BF2B009B50B4 /* UIColorEx.swift in Sources */,
 				998CF4F51BB25B32009B50B4 /* SectorMenu.swift in Sources */,
 				998CF4C71BB2552C009B50B4 /* ViewController.swift in Sources */,
-				998CF4FC1BB3C126009B50B4 /* CGPointEx.swift in Sources */,
-				998CF4F81BB3BE46009B50B4 /* CGMath.swift in Sources */,
 				998CF4C51BB2552C009B50B4 /* AppDelegate.swift in Sources */,
 				998CF4F31BB25B0A009B50B4 /* SectorMenuItem.swift in Sources */,
 			);
@@ -428,6 +412,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = SectorMenu/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.akaimo.SectorMenu;
@@ -439,6 +424,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = SectorMenu/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.akaimo.SectorMenu;
