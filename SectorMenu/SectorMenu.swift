@@ -107,6 +107,12 @@ public class SectorMenu: UIView {
         return path
     }
     
+    private func drawShadow() {
+        if enableShadow {
+            circleLayer.appendShadow()
+        }
+    }
+    
     
     // MARK: private methods
     private func setup() {
