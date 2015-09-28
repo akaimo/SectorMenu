@@ -1,15 +1,14 @@
 //
-//  SetorMenuCircle.swift
+//  SectorMenuCircle.swift
 //  SectorMenu
 //
 //  Created by akaimo on 2015/09/28.
 //  Copyright © 2015年 akaimo. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
-public class SetorMenuCircle: UIView {
+public class SectorMenuCircle: UIView {
 
     var points: [CGPoint] = []
     var radius: CGFloat {
@@ -79,7 +78,7 @@ public class SetorMenuCircle: UIView {
 //    func circlePoint(rad: CGFloat) -> CGPoint {
 //        return circlePoint(center, radius: radius, rad: rad)
 //    }
-//    
+//
 //    private func circlePoint(center: CGPoint, radius: CGFloat, rad: CGFloat) -> CGPoint {
 //        let x = center.x + radius * cos(rad)
 //        let y = center.y + radius * sin(rad)

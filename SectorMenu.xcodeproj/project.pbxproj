@@ -16,7 +16,7 @@
 		998CF4E51BB2552C009B50B4 /* SectorMenuUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998CF4E41BB2552C009B50B4 /* SectorMenuUITests.swift */; };
 		998CF4F31BB25B0A009B50B4 /* SectorMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998CF4F21BB25B0A009B50B4 /* SectorMenuItem.swift */; settings = {ASSET_TAGS = (); }; };
 		998CF4F51BB25B32009B50B4 /* SectorMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998CF4F41BB25B32009B50B4 /* SectorMenu.swift */; settings = {ASSET_TAGS = (); }; };
-		998CF5001BB96BDE009B50B4 /* SetorMenuCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998CF4FF1BB96BDE009B50B4 /* SetorMenuCircle.swift */; settings = {ASSET_TAGS = (); }; };
+		998CF5021BB96F3F009B50B4 /* SectorMenuCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998CF5011BB96F3F009B50B4 /* SectorMenuCircle.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,7 +52,7 @@
 		998CF4E61BB2552C009B50B4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		998CF4F21BB25B0A009B50B4 /* SectorMenuItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectorMenuItem.swift; sourceTree = "<group>"; };
 		998CF4F41BB25B32009B50B4 /* SectorMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectorMenu.swift; sourceTree = "<group>"; };
-		998CF4FF1BB96BDE009B50B4 /* SetorMenuCircle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetorMenuCircle.swift; sourceTree = "<group>"; };
+		998CF5011BB96F3F009B50B4 /* SectorMenuCircle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectorMenuCircle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,7 +137,7 @@
 			children = (
 				998CF4F41BB25B32009B50B4 /* SectorMenu.swift */,
 				998CF4F21BB25B0A009B50B4 /* SectorMenuItem.swift */,
-				998CF4FF1BB96BDE009B50B4 /* SetorMenuCircle.swift */,
+				998CF5011BB96F3F009B50B4 /* SectorMenuCircle.swift */,
 			);
 			name = SectorMenu;
 			sourceTree = "<group>";
@@ -273,8 +273,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				998CF4F51BB25B32009B50B4 /* SectorMenu.swift in Sources */,
+				998CF5021BB96F3F009B50B4 /* SectorMenuCircle.swift in Sources */,
 				998CF4C71BB2552C009B50B4 /* ViewController.swift in Sources */,
-				998CF5001BB96BDE009B50B4 /* SetorMenuCircle.swift in Sources */,
 				998CF4C51BB2552C009B50B4 /* AppDelegate.swift in Sources */,
 				998CF4F31BB25B0A009B50B4 /* SectorMenuItem.swift in Sources */,
 			);
