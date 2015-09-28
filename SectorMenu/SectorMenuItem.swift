@@ -6,16 +6,35 @@
 //  Copyright © 2015年 akaimo. All rights reserved.
 //
 
+import Foundation
 import UIKit
 
-class SectorMenuItem: UIImageView {
+public class SectorMenuItem: UIImageView {
 
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
-        // Drawing code
+    public var startPoint: CGPoint?
+    public var endPoint: CGPoint?
+    public var nearPoint: CGPoint?
+    public var farPoint: CGPoint?
+    
+//    public weak var delegate: PathMenuItemDelegate!
+    
+    private var _highlighted: Bool = false
+    
+    
+    // MARK: init
+    override public init(frame: CGRect) {
+        super.init(frame: frame)
     }
-    */
+    
+    required public init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    convenience override public init(image:UIImage!) {
+        self.init(frame: CGRectZero)
+        
+        self.image = image
+        self.userInteractionEnabled = true
+    }
 
 }
