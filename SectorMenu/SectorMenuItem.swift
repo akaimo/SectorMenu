@@ -36,5 +36,54 @@ public class SectorMenuItem: UIImageView {
         self.image = image
         self.userInteractionEnabled = true
     }
-
+    
+    
+    private func ScaleRect(rect: CGRect, n: CGFloat) -> CGRect {
+        let width = rect.size.width
+        let height = rect.size.height
+        return CGRectMake(CGFloat((width - width * n)/2), CGFloat((height - height * n)/2), CGFloat(width * n), CGFloat(height * n))
+    }
+    
+    
+    
+    //MARK: UIView's methods
+    override public func layoutSubviews() {
+        super.layoutSubviews()
+        
+        if let image = self.image {
+            self.bounds = CGRectMake(0, 0, image.size.width, image.size.height)
+        }
+    }
+    
+    public override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        self.highlighted = true
+//        if self.delegate.respondsToSelector("PathMenuItemTouchesBegan:") {
+//            self.delegate.PathMenuItemTouchesBegan(self)
+//        }
+    }
+    
+    public override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        let touch = touches.first
+        let location:CGPoint? = touch?.locationInView(self)
+        if let loc = location {
+            if (!CGRectContainsPoint(ScaleRect(self.bounds, n: 2.0), loc)) {
+                self.highlighted = false
+            }
+        }
+    }
+    
+    public override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        self.highlighted = false
+//        let touch = touches.first
+//        let location:CGPoint? = touch?.locationInView(self)
+//        if let loc = location {
+//            if (CGRectContainsPoint(ScaleRect(self.bounds, n: 2.0), loc)) {
+//                self.delegate.PathMenuItemTouchesEnd(self)
+//            }
+//        }
+    }
+    
+    public override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
+        self.highlighted = false
+    }
 }
