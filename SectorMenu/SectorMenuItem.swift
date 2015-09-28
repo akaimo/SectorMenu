@@ -16,10 +16,10 @@ import UIKit
 
 public class SectorMenuItem: UIImageView {
 
-    public var startPoint: CGPoint?
-    public var endPoint: CGPoint?
-    public var nearPoint: CGPoint?
-    public var farPoint: CGPoint?
+//    public var startPoint: CGPoint?
+//    public var endPoint: CGPoint?
+//    public var nearPoint: CGPoint?
+//    public var farPoint: CGPoint?
     
     public weak var delegate: SectorMenuItemDelegate!
     
