@@ -6,6 +6,7 @@
 //  Copyright © 2015年 akaimo. All rights reserved.
 //
 
+import Foundation
 import UIKit
 
 public class SectorMenuCircle: UIView {

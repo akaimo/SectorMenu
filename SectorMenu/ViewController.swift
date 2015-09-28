@@ -20,6 +20,14 @@ class ViewController: UIViewController {
 //        starMenuItem1.backgroundColor = UIColor.blueColor()
 //        
 //        self.view.addSubview(starMenuItem1)
+        
+        let circle: SectorMenuCircle = SectorMenuCircle()
+        circle.radius = 25
+        circle.frame = CGRect(x: 50, y: 50, width: 50, height: 50)
+        let img = UIImageView(image: UIImage(named: "Place"))
+        img.frame = CGRect(x: 12.5, y: 12.5, width: 25, height: 25)
+        circle.addSubview(img)
+        self.view.addSubview(circle)
     }
 
     override func didReceiveMemoryWarning() {
