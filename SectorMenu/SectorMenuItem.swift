@@ -9,6 +9,11 @@
 import Foundation
 import UIKit
 
+@objc public protocol SectorMenuItemDelegate: NSObjectProtocol {
+    func SectorMenuItemTouchesBegan(item: SectorMenuItem)
+    func SectorMenuItemTouchesEnd(item:SectorMenuItem)
+}
+
 public class SectorMenuItem: UIImageView {
 
     public var startPoint: CGPoint?
@@ -16,7 +21,7 @@ public class SectorMenuItem: UIImageView {
     public var nearPoint: CGPoint?
     public var farPoint: CGPoint?
     
-//    public weak var delegate: PathMenuItemDelegate!
+    public weak var delegate: SectorMenuItemDelegate!
     
     private var _highlighted: Bool = false
     
@@ -57,9 +62,9 @@ public class SectorMenuItem: UIImageView {
     
     public override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         self.highlighted = true
-//        if self.delegate.respondsToSelector("PathMenuItemTouchesBegan:") {
-//            self.delegate.PathMenuItemTouchesBegan(self)
-//        }
+        if self.delegate.respondsToSelector("SectorMenuItemTouchesBegan:") {
+            self.delegate.SectorMenuItemTouchesBegan(self)
+        }
     }
     
     public override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -74,13 +79,13 @@ public class SectorMenuItem: UIImageView {
     
     public override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         self.highlighted = false
-//        let touch = touches.first
-//        let location:CGPoint? = touch?.locationInView(self)
-//        if let loc = location {
-//            if (CGRectContainsPoint(ScaleRect(self.bounds, n: 2.0), loc)) {
-//                self.delegate.PathMenuItemTouchesEnd(self)
-//            }
-//        }
+        let touch = touches.first
+        let location:CGPoint? = touch?.locationInView(self)
+        if let loc = location {
+            if (CGRectContainsPoint(ScaleRect(self.bounds, n: 2.0), loc)) {
+                self.delegate.SectorMenuItemTouchesEnd(self)
+            }
+        }
     }
     
     public override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
