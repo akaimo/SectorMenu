@@ -15,7 +15,6 @@ public class SectorMenuCell: SectorMenuCircle {
     
     public var responsible = true
     public var imageView = UIImageView()
-//    weak var actionButton: LiquidFloatingActionButton?
     
     // for implement responsible color
     private var originalColor: UIColor
@@ -49,6 +48,7 @@ public class SectorMenuCell: SectorMenuCircle {
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
     
     func setup(image: UIImage, tintColor: UIColor = UIColor.whiteColor()) {
         imageView.image = image.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
