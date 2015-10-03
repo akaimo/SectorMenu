@@ -8,7 +8,21 @@
 
 import UIKit
 
+// SectorMenu DataSource methods
+@objc public protocol SectorMenuDataSource {
+    func numberOfCells(sectorMenu: SectorMenu) -> Int
+    func cellForIndex(index: Int) -> SectorMenuCell
+}
+
+@objc public protocol SectorMenuDelegate {
+    // selected method
+    optional func sectorMenu(sectorMenu: SectorMenu, didSelectItemAtIndex index: Int)
+}
+
 public class SectorMenu: SectorMenuCell {
+    
+    public var delegate:   SectorMenuDelegate?
+    public var dataSource: SectorMenuDataSource?
     
     public var isClosed = true
     

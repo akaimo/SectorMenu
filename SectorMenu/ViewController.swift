@@ -8,7 +8,9 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, SectorMenuDataSource, SectorMenuDelegate {
+    
+    var cells: [SectorMenuCell] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,8 +27,14 @@ class ViewController: UIViewController {
         cell.frame = CGRect(x: 200, y: 200, width: 50, height: 50)
         self.view.addSubview(cell)
         
-        let actionBtn: SectorMenu = SectorMenu(frame: CGRect(x: 150, y: 300, width: 50, height: 50), icon: UIImage(named: "Place")!)
-        self.view.addSubview(actionBtn)
+        let sectorMenu: SectorMenu = SectorMenu(frame: CGRect(x: 150, y: 300, width: 50, height: 50), icon: UIImage(named: "Place")!)
+        sectorMenu.delegate = self
+        sectorMenu.dataSource = self
+        self.view.addSubview(sectorMenu)
+        
+        cells.append(SectorMenuCell(icon: UIImage(named: "Place")!))
+        cells.append(SectorMenuCell(icon: UIImage(named: "Place")!))
+        cells.append(SectorMenuCell(icon: UIImage(named: "Place")!))
     }
 
     override func didReceiveMemoryWarning() {
@@ -35,5 +43,18 @@ class ViewController: UIViewController {
     }
 
 
+    // MARK: SectorMenuDataSource Delegate
+    func numberOfCells(sectorMenu: SectorMenu) -> Int {
+        return cells.count
+    }
+    
+    func cellForIndex(index: Int) -> SectorMenuCell {
+        return cells[index]
+    }
+    
+    func sectorMenu(sectorMenu: SectorMenu, didSelectItemAtIndex index: Int) {
+        print("did Tapped! \(index)")
+    }
+    
 }
 
