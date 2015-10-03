@@ -10,6 +10,8 @@ import UIKit
 
 public class SectorMenu: SectorMenuCell {
     
+    public var isClosed = true
+    
     // MARK: init
     override init(center: CGPoint, radius: CGFloat, color: UIColor, icon: UIImage) {
         super.init(center: center, radius: radius, color: color, icon: icon)
@@ -34,10 +36,28 @@ public class SectorMenu: SectorMenuCell {
     }
     
     
+    // MARK: public
+    public func open() {
+        
+    }
+    
+    public func close() {
+        
+    }
+    
     
     // MARK: private
     private func setup() {
         userInteractionEnabled = true
+    }
+    
+    private func didTaped() {
+        if isClosed {
+            open()
+        } else {
+            close()
+        }
+        
     }
     
     
@@ -54,6 +74,7 @@ public class SectorMenu: SectorMenuCell {
     
     override public func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         color = originalColor
+        didTaped()
     }
 
 }
