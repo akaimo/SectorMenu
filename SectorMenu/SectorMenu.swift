@@ -8,49 +8,52 @@
 
 import UIKit
 
-public class SectorMenu: UIView {
+public class SectorMenu: SectorMenuCell {
     
-    public enum State {
-        case Close
-        case Expand
+    // MARK: init
+    override init(center: CGPoint, radius: CGFloat, color: UIColor, icon: UIImage) {
+        super.init(center: center, radius: radius, color: color, icon: icon)
+        setup()
+    }
+    
+    override init(center: CGPoint, radius: CGFloat, color: UIColor, view: UIView) {
+        super.init(center: center, radius: radius, color: color, view: view)
+        setup()
+    }
+    
+    public init(frame: CGRect, icon: UIImage) {
+        super.init(icon: icon)
+        setup()
+        self.frame = frame
+        self.radius = frame.width * 0.5
+        self.color = UIColor.redColor()
     }
     
     required public init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        fatalError("init(coder:) has not been implemented")
     }
     
-    override public init(frame: CGRect) {
-        super.init(frame: frame)
+    
+    
+    // MARK: private
+    private func setup() {
+        userInteractionEnabled = true
     }
     
-    convenience public init(frame: CGRect!, startItem: SectorMenuItem?, optionMenus aMenusArray:[SectorMenuItem]?) {
-        
-        self.init(frame: frame)
-        self.backgroundColor = UIColor.clearColor()
-        
-//        self.timeOffset = kPathMenuDefaultTimeOffset
-//        self.rotateAngle = kPathMenuDefaultRotateAngle
-//        self.menuWholeAngle = kPathMenuDefaultMenuWholeAngle
-//        self.startPoint = CGPointMake(kPathMenuDefaultStartPointX, kPathMenuDefaultStartPointY)
-//        self.expandRotation = kPathMenuDefaultExpandRotation
-//        self.closeRotation = kPathMenuDefaultCloseRotation
-//        self.animationDuration = kPathMenuDefaultAnimationDuration
-//        self.expandRotateAnimationDuration = kPathMenuDefaultExpandRotateAnimationDuration
-//        self.closeRotateAnimationDuration = kPathMenuDefaultCloseRotateAnimationDuration
-//        self.startMenuAnimationDuration = kPathMenuStartMenuDefaultAnimationDuration
-//        self.rotateAddButton = true
-//        
-//        self.nearRadius = kPathMenuDefaultNearRadius
-//        self.endRadius = kPathMenuDefaultEndRadius
-//        self.farRadius = kPathMenuDefaultFarRadius
-//        
-//        self.menusArray = aMenusArray!
-//        self.motionState = State.Close
-//        
-//        self.startButton = startItem!
-//        self.startButton.delegate = self
-//        self.startButton.center = self.startPoint
-//        self.addSubview(self.startButton)
+    
+    
+    // MARK: UIView
+    public override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        super.touchesBegan(touches, withEvent: event)
+        print("touchBegan")
+    }
+    
+    public override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
+        super.touchesCancelled(touches, withEvent: event)
+    }
+    
+    override public func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        color = originalColor
     }
 
 }

@@ -24,6 +24,9 @@ class ViewController: UIViewController {
         cell.color = UIColor.blueColor()
         cell.frame = CGRect(x: 200, y: 200, width: 50, height: 50)
         self.view.addSubview(cell)
+        
+        let actionBtn: SectorMenu = SectorMenu(frame: CGRect(x: 150, y: 300, width: 50, height: 50), icon: UIImage(named: "Place")!)
+        self.view.addSubview(actionBtn)
     }
 
     override func didReceiveMemoryWarning() {

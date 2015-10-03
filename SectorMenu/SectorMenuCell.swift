@@ -17,7 +17,7 @@ public class SectorMenuCell: SectorMenuCircle {
     public var imageView = UIImageView()
     
     // for implement responsible color
-    private var originalColor: UIColor
+    var originalColor: UIColor
     
     public override var frame: CGRect {
         didSet {
