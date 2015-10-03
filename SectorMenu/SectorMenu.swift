@@ -19,7 +19,13 @@ import UIKit
     optional func sectorMenu(sectorMenu: SectorMenu, didSelectItemAtIndex index: Int)
 }
 
+
 public class SectorMenu: SectorMenuCircle {
+    
+    private let internalRadiusRatio: CGFloat = 20.0 / 56.0
+    
+    private let plusLayer   = CAShapeLayer()
+    private var plusRotation: CGFloat = 0
     
     public var delegate:   SectorMenuDelegate?
     public var dataSource: SectorMenuDataSource?
@@ -46,6 +52,11 @@ public class SectorMenu: SectorMenuCircle {
     
     
     // MARK: public
+    public override func drawRect(rect: CGRect) {
+        super.drawRect(rect)
+        drawPlus(plusRotation)
+    }
+    
     public func open() {
         
     }
@@ -58,6 +69,7 @@ public class SectorMenu: SectorMenuCircle {
     // MARK: private
     private func setup() {
         userInteractionEnabled = true
+        circleLayer.addSublayer(plusLayer)
     }
     
     private func didTaped() {
@@ -67,6 +79,38 @@ public class SectorMenu: SectorMenuCircle {
             close()
         }
         
+    }
+    
+    private func drawPlus(rotation: CGFloat) {
+        plusLayer.frame = CGRect(origin: CGPointZero, size: self.frame.size)
+        plusLayer.lineCap = kCALineCapRound
+        plusLayer.strokeColor = UIColor.whiteColor().CGColor // TODO: customizable
+        plusLayer.lineWidth = 3.0
+        
+        plusLayer.path = pathPlus(rotation).CGPath
+    }
+    
+    private func pathPlus(rotation: CGFloat) -> UIBezierPath {
+        let radius = self.frame.width * internalRadiusRatio * 0.5
+        let center = CGPoint(x: self.center.x - self.frame.origin.x, y: self.center.y - self.frame.origin.y)
+        let points = [
+            circlePoint(center, radius: radius, rad: rotation),
+            circlePoint(center, radius: radius, rad: CGFloat(M_PI_2) + rotation),
+            circlePoint(center, radius: radius, rad: CGFloat(M_PI_2) * 2 + rotation),
+            circlePoint(center, radius: radius, rad: CGFloat(M_PI_2) * 3 + rotation)
+        ]
+        let path = UIBezierPath()
+        path.moveToPoint(points[0])
+        path.addLineToPoint(points[2])
+        path.moveToPoint(points[1])
+        path.addLineToPoint(points[3])
+        return path
+    }
+    
+    private func circlePoint(center: CGPoint, radius: CGFloat, rad: CGFloat) -> CGPoint {
+        let x = center.x + radius * cos(rad)
+        let y = center.y + radius * sin(rad)
+        return CGPoint(x: x, y: y)
     }
     
     
