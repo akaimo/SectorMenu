@@ -27,7 +27,7 @@ class ViewController: UIViewController, SectorMenuDataSource, SectorMenuDelegate
         cell.frame = CGRect(x: 200, y: 200, width: 50, height: 50)
         self.view.addSubview(cell)
         
-        let sectorMenu: SectorMenu = SectorMenu(frame: CGRect(x: 150, y: 300, width: 50, height: 50), icon: UIImage(named: "Place")!)
+        let sectorMenu: SectorMenu = SectorMenu(frame: CGRect(x: 150, y: 300, width: 50, height: 50))
         sectorMenu.delegate = self
         sectorMenu.dataSource = self
         self.view.addSubview(sectorMenu)

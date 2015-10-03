@@ -19,7 +19,7 @@ import UIKit
     optional func sectorMenu(sectorMenu: SectorMenu, didSelectItemAtIndex index: Int)
 }
 
-public class SectorMenu: SectorMenuCell {
+public class SectorMenu: SectorMenuCircle {
     
     public var delegate:   SectorMenuDelegate?
     public var dataSource: SectorMenuDataSource?
@@ -27,18 +27,13 @@ public class SectorMenu: SectorMenuCell {
     public var isClosed = true
     
     // MARK: init
-    override init(center: CGPoint, radius: CGFloat, color: UIColor, icon: UIImage) {
-        super.init(center: center, radius: radius, color: color, icon: icon)
+    override init(center: CGPoint, radius: CGFloat, color: UIColor) {
+        super.init(center: center, radius: radius, color: color)
         setup()
     }
     
-    override init(center: CGPoint, radius: CGFloat, color: UIColor, view: UIView) {
-        super.init(center: center, radius: radius, color: color, view: view)
-        setup()
-    }
-    
-    public init(frame: CGRect, icon: UIImage) {
-        super.init(icon: icon)
+    public init(frame: CGRect) {
+        super.init()
         setup()
         self.frame = frame
         self.radius = frame.width * 0.5
@@ -87,7 +82,7 @@ public class SectorMenu: SectorMenuCell {
     }
     
     override public func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        color = originalColor
+//        color = originalColor
         didTaped()
     }
 

@@ -67,14 +67,14 @@ public class SectorMenuCell: SectorMenuCircle {
         imageView.frame = CGRect(x: frame.width - frame.width * internalRatio, y: frame.height - frame.height * internalRatio, width: size.width, height: size.height)
     }
     
-    func update(key: CGFloat, open: Bool) {
-        for subview in self.subviews {
-            if let view = subview as? UIView {
-                let ratio = max(2 * (key * key - 0.5), 0)
-                view.alpha = open ? ratio : -ratio
-            }
-        }
-    }
+//    func update(key: CGFloat, open: Bool) {
+//        for subview in self.subviews {
+//            if let view = subview as? UIView {
+//                let ratio = max(2 * (key * key - 0.5), 0)
+//                view.alpha = open ? ratio : -ratio
+//            }
+//        }
+//    }
     
     
     // MARK: UIView
