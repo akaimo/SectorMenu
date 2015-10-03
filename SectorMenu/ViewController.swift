@@ -18,6 +18,12 @@ class ViewController: UIViewController {
         img.frame = CGRect(x: 10, y: 10, width: 30, height: 30)
         circle.addSubview(img)
         self.view.addSubview(circle)
+        
+        let cell: SectorMenuCell = SectorMenuCell(icon: UIImage(named: "Place")!)
+        cell.radius = 25
+        cell.color = UIColor.blueColor()
+        cell.frame = CGRect(x: 200, y: 200, width: 50, height: 50)
+        self.view.addSubview(cell)
     }
 
     override func didReceiveMemoryWarning() {
