@@ -20,10 +20,12 @@ import UIKit
 }
 
 
-public class SectorMenu: SectorMenuCircle {
+public class SectorMenu: UIView {
     
     private let internalRadiusRatio: CGFloat = 20.0 / 56.0
+    public var cellRadiusRatio: CGFloat      = 0.38
     
+    private let actionBtn = SectorMenuCircle()
     private let plusLayer   = CAShapeLayer()
     private var plusRotation: CGFloat = 0
     
@@ -32,33 +34,31 @@ public class SectorMenu: SectorMenuCircle {
     
     public var isClosed = true
     
-    // MARK: init
-    override init(center: CGPoint, radius: CGFloat, color: UIColor) {
-        super.init(center: center, radius: radius, color: color)
-        setup()
-    }
+    public var color: UIColor = UIColor(red: 82/255.0, green: 112/255.0, blue: 235/255.0, alpha: 1.0)
     
-    public init(frame: CGRect) {
-        super.init()
+    // MARK: init
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
         setup()
-        self.frame = frame
-        self.radius = frame.width * 0.5
-        self.color = UIColor.redColor()
     }
     
     required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
+        setup()
     }
     
     
     // MARK: public
-    public override func drawRect(rect: CGRect) {
-        super.drawRect(rect)
-        drawPlus(plusRotation)
-    }
-    
     public func open() {
+        // TODO: plusを回転させる
         
+        let cells = cellArray()
+        for cell in cells {
+            insertCell(cell)
+        }
+        
+        // TODO: cellを展開する
+        setNeedsDisplay()
     }
     
     public func close() {
@@ -68,8 +68,16 @@ public class SectorMenu: SectorMenuCircle {
     
     // MARK: private
     private func setup() {
+        self.backgroundColor = UIColor.clearColor()
         userInteractionEnabled = true
-        circleLayer.addSublayer(plusLayer)
+        
+        drawPlus(plusRotation)
+        
+        actionBtn.radius = self.frame.size.width * 0.5
+        actionBtn.frame = CGRect(x: 0, y: 0, width: self.frame.size.width, height: self.frame.size.height)
+        actionBtn.color = color
+        actionBtn.circleLayer.addSublayer(plusLayer)
+        addSubview(actionBtn)
     }
     
     private func didTaped() {
@@ -111,6 +119,24 @@ public class SectorMenu: SectorMenuCircle {
         let x = center.x + radius * cos(rad)
         let y = center.y + radius * sin(rad)
         return CGPoint(x: x, y: y)
+    }
+    
+    private func cellArray() -> [SectorMenuCell] {
+        var result: [SectorMenuCell] = []
+        if let source = dataSource {
+            for i in 0..<source.numberOfCells(self) {
+                result.append(source.cellForIndex(i))
+            }
+        }
+        return result
+    }
+    
+    private func insertCell(cell: SectorMenuCell) {
+        cell.color  = self.color
+        cell.radius = self.frame.width * cellRadiusRatio
+        cell.center = CGPoint(x: self.center.x - self.frame.origin.x, y: self.center.y - self.frame.origin.y)
+        cell.actionButton = self
+        insertSubview(cell, belowSubview: actionBtn)
     }
     
     

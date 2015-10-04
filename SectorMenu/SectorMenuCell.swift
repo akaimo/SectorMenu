@@ -15,6 +15,7 @@ public class SectorMenuCell: SectorMenuCircle {
     
     public var responsible = true
     public var imageView = UIImageView()
+    weak var actionButton: SectorMenu?
     
     // for implement responsible color
     var originalColor: UIColor
