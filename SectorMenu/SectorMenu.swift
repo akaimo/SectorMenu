@@ -57,7 +57,7 @@ public class SectorMenu: UIView {
             insertCell(cell)
         }
         
-        // TODO: cellを展開する
+        openingCell(cells)
         setNeedsDisplay()
     }
     
@@ -139,6 +139,21 @@ public class SectorMenu: UIView {
         insertSubview(cell, belowSubview: actionBtn)
     }
     
+    private func openingCell(cells: [SectorMenuCell]) {
+        // TODO: cellを展開する
+        for var i=1; i<=cells.count; i++ {
+//            cells[i-1].frame.origin.y -= CGFloat(60 * i)
+            UIView.animateWithDuration(1,
+                animations: {() -> Void  in
+                    cells[i-1].frame.origin.y -= CGFloat(60 * i)
+            })
+        }
+        
+        for cell in cells {
+            cell.userInteractionEnabled = true
+        }
+    }
+    
     
     
     // MARK: UIView
@@ -154,6 +169,20 @@ public class SectorMenu: UIView {
     override public func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
 //        color = originalColor
         didTaped()
+    }
+    
+    public override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
+        for cell in cellArray() {
+            let pointForTargetView = cell.convertPoint(point, fromView: self)
+            
+            if (CGRectContainsPoint(cell.bounds, pointForTargetView)) {
+                if cell.userInteractionEnabled {
+                    return cell.hitTest(pointForTargetView, withEvent: event)
+                }
+            }
+        }
+        
+        return super.hitTest(point, withEvent: event)
     }
 
 }

@@ -83,6 +83,7 @@ public class SectorMenuCell: SectorMenuCircle {
         if responsible {
             originalColor = color
 //            color = originalColor.white(0.5)
+            print("cell")
             setNeedsDisplay()
         }
     }
