@@ -109,7 +109,11 @@ public class SectorMenu: UIView {
     }
     
     public func close() {
+        // TODO: plusの回転を元に戻す
         
+        let cells = cellArray()
+        closingCell(cells)
+        setNeedsDisplay()
     }
     
     private func insertCell(cell: SectorMenuCell) {
@@ -121,18 +125,35 @@ public class SectorMenu: UIView {
     }
     
     private func openingCell(cells: [SectorMenuCell]) {
-        // TODO: cellを展開する
+        // TODO: cellを展開するアニメーションをつける
         for var i=1; i<=cells.count; i++ {
-            //            cells[i-1].frame.origin.y -= CGFloat(60 * i)
-            UIView.animateWithDuration(1,
+            UIView.animateWithDuration(0.5,
                 animations: {() -> Void  in
-                    cells[i-1].frame.origin.y -= CGFloat(60 * i)
+                    cells[i-1].center.y -= CGFloat(60 * i)
             })
         }
         
         for cell in cells {
             cell.userInteractionEnabled = true
         }
+        
+        isClosed = false
+    }
+    
+    private func closingCell(cells: [SectorMenuCell]) {
+        // TODO: cellを閉じるアニメーションをつける
+        for var i=1; i<=cells.count; i++ {
+            UIView.animateWithDuration(0.2,
+                animations: {() -> Void  in
+                    cells[i-1].center.y += CGFloat(60 * i)
+            })
+        }
+        
+        for cell in cells {
+            cell.userInteractionEnabled = false
+        }
+        
+        isClosed = true
     }
     
     
@@ -175,7 +196,6 @@ public class SectorMenu: UIView {
     // MARK: UIView
     public override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         super.touchesBegan(touches, withEvent: event)
-        print("touchBegan")
     }
     
     public override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
