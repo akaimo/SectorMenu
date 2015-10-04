@@ -195,15 +195,18 @@ public class SectorMenu: UIView {
     
     // MARK: UIView
     public override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        super.touchesBegan(touches, withEvent: event)
+        let scale: CGFloat = 0.5
+        let old = CGColorGetComponents(color.CGColor)
+        let newColor = UIColor(red: old[0] + (1.0 - old[0]) * scale, green: old[1] + (1.0 - old[1]) * scale, blue: old[2] + (1.0 - old[2]) * scale, alpha: 1.0)
+        actionBtn.color = newColor
     }
     
     public override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
-        super.touchesCancelled(touches, withEvent: event)
+        actionBtn.color = color
     }
     
     override public func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
-//        color = originalColor
+        actionBtn.color = color
         didTaped()
     }
     
