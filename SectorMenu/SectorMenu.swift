@@ -48,7 +48,54 @@ public class SectorMenu: UIView {
     }
     
     
-    // MARK: public
+    // MARK: private
+    private func setup() {
+        self.backgroundColor = UIColor.clearColor()
+        userInteractionEnabled = true
+        
+        drawPlus(plusRotation)
+        
+        actionBtn.radius = self.frame.size.width * 0.5
+        actionBtn.frame = CGRect(x: 0, y: 0, width: self.frame.size.width, height: self.frame.size.height)
+        actionBtn.color = color
+        actionBtn.circleLayer.addSublayer(plusLayer)
+        addSubview(actionBtn)
+    }
+    
+    private func cellArray() -> [SectorMenuCell] {
+        var result: [SectorMenuCell] = []
+        if let source = dataSource {
+            for i in 0..<source.numberOfCells(self) {
+                result.append(source.cellForIndex(i))
+            }
+        }
+        return result
+    }
+    
+    
+    
+    //MARK: tapAction
+    private func didTaped() {
+        if isClosed {
+            open()
+        } else {
+            close()
+        }
+        
+    }
+    
+    public func didTappedCell(target: SectorMenuCell) {
+        if let _ = dataSource {
+            let cells = cellArray()
+            for i in 0..<cells.count {
+                let cell = cells[i]
+                if target === cell {
+                    delegate?.sectorMenu!(self, didSelectItemAtIndex: i)
+                }
+            }
+        }
+    }
+    
     public func open() {
         // TODO: plusを回転させる
         
@@ -65,42 +112,32 @@ public class SectorMenu: UIView {
         
     }
     
-    public func didTappedCell(target: SectorMenuCell) {
-        if let _ = dataSource {
-            let cells = cellArray()
-            for i in 0..<cells.count {
-                let cell = cells[i]
-                if target === cell {
-                    delegate?.sectorMenu!(self, didSelectItemAtIndex: i)
-                }
-            }
+    private func insertCell(cell: SectorMenuCell) {
+        cell.color  = self.color
+        cell.radius = self.frame.width * cellRadiusRatio
+        cell.center = CGPoint(x: self.center.x - self.frame.origin.x, y: self.center.y - self.frame.origin.y)
+        cell.actionButton = self
+        insertSubview(cell, belowSubview: actionBtn)
+    }
+    
+    private func openingCell(cells: [SectorMenuCell]) {
+        // TODO: cellを展開する
+        for var i=1; i<=cells.count; i++ {
+            //            cells[i-1].frame.origin.y -= CGFloat(60 * i)
+            UIView.animateWithDuration(1,
+                animations: {() -> Void  in
+                    cells[i-1].frame.origin.y -= CGFloat(60 * i)
+            })
+        }
+        
+        for cell in cells {
+            cell.userInteractionEnabled = true
         }
     }
     
     
-    // MARK: private
-    private func setup() {
-        self.backgroundColor = UIColor.clearColor()
-        userInteractionEnabled = true
-        
-        drawPlus(plusRotation)
-        
-        actionBtn.radius = self.frame.size.width * 0.5
-        actionBtn.frame = CGRect(x: 0, y: 0, width: self.frame.size.width, height: self.frame.size.height)
-        actionBtn.color = color
-        actionBtn.circleLayer.addSublayer(plusLayer)
-        addSubview(actionBtn)
-    }
     
-    private func didTaped() {
-        if isClosed {
-            open()
-        } else {
-            close()
-        }
-        
-    }
-    
+    // MARK: plus
     private func drawPlus(rotation: CGFloat) {
         plusLayer.frame = CGRect(origin: CGPointZero, size: self.frame.size)
         plusLayer.lineCap = kCALineCapRound
@@ -131,39 +168,6 @@ public class SectorMenu: UIView {
         let x = center.x + radius * cos(rad)
         let y = center.y + radius * sin(rad)
         return CGPoint(x: x, y: y)
-    }
-    
-    private func cellArray() -> [SectorMenuCell] {
-        var result: [SectorMenuCell] = []
-        if let source = dataSource {
-            for i in 0..<source.numberOfCells(self) {
-                result.append(source.cellForIndex(i))
-            }
-        }
-        return result
-    }
-    
-    private func insertCell(cell: SectorMenuCell) {
-        cell.color  = self.color
-        cell.radius = self.frame.width * cellRadiusRatio
-        cell.center = CGPoint(x: self.center.x - self.frame.origin.x, y: self.center.y - self.frame.origin.y)
-        cell.actionButton = self
-        insertSubview(cell, belowSubview: actionBtn)
-    }
-    
-    private func openingCell(cells: [SectorMenuCell]) {
-        // TODO: cellを展開する
-        for var i=1; i<=cells.count; i++ {
-//            cells[i-1].frame.origin.y -= CGFloat(60 * i)
-            UIView.animateWithDuration(1,
-                animations: {() -> Void  in
-                    cells[i-1].frame.origin.y -= CGFloat(60 * i)
-            })
-        }
-        
-        for cell in cells {
-            cell.userInteractionEnabled = true
-        }
     }
     
     
