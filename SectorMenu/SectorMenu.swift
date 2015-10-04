@@ -65,6 +65,18 @@ public class SectorMenu: UIView {
         
     }
     
+    public func didTappedCell(target: SectorMenuCell) {
+        if let _ = dataSource {
+            let cells = cellArray()
+            for i in 0..<cells.count {
+                let cell = cells[i]
+                if target === cell {
+                    delegate?.sectorMenu!(self, didSelectItemAtIndex: i)
+                }
+            }
+        }
+    }
+    
     
     // MARK: private
     private func setup() {

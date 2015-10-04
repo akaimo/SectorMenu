@@ -83,7 +83,6 @@ public class SectorMenuCell: SectorMenuCircle {
         if responsible {
             originalColor = color
 //            color = originalColor.white(0.5)
-            print("cell")
             setNeedsDisplay()
         }
     }
@@ -97,7 +96,7 @@ public class SectorMenuCell: SectorMenuCircle {
     
     override public func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         color = originalColor
-//        actionButton?.didTappedCell(self)
+        actionButton?.didTappedCell(self)
     }
 
 }
