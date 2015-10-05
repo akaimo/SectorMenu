@@ -48,6 +48,11 @@ public class SectorMenu: UIView {
     }
     
     
+    public override func drawRect(rect: CGRect) {
+        drawPlus(plusRotation)
+    }
+    
+    
     // MARK: private
     private func setup() {
         self.backgroundColor = UIColor.clearColor()
@@ -97,7 +102,8 @@ public class SectorMenu: UIView {
     }
     
     public func open() {
-        // TODO: plusを回転させる
+        self.plusLayer.addAnimation(plusKeyframe(true), forKey: "plusRot")
+        self.plusRotation = CGFloat(M_PI * 0.25) // 45 degree
         
         let cells = cellArray()
         for cell in cells {
@@ -109,7 +115,8 @@ public class SectorMenu: UIView {
     }
     
     public func close() {
-        // TODO: plusの回転を元に戻す
+        self.plusLayer.addAnimation(plusKeyframe(false), forKey: "plusRot")
+        self.plusRotation = 0
         
         let cells = cellArray()
         closingCell(cells)
@@ -189,6 +196,26 @@ public class SectorMenu: UIView {
         let x = center.x + radius * cos(rad)
         let y = center.y + radius * sin(rad)
         return CGPoint(x: x, y: y)
+    }
+    
+    private func plusKeyframe(closed: Bool) -> CAKeyframeAnimation {
+        let paths = closed ? [
+            pathPlus(CGFloat(M_PI * 0)),
+            pathPlus(CGFloat(M_PI * 0.125)),
+            pathPlus(CGFloat(M_PI * 0.25)),
+            ] : [
+                pathPlus(CGFloat(M_PI * 0.25)),
+                pathPlus(CGFloat(M_PI * 0.125)),
+                pathPlus(CGFloat(M_PI * 0)),
+        ]
+        let anim = CAKeyframeAnimation(keyPath: "path")
+        anim.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        anim.values = paths.map { $0.CGPath }
+        anim.duration = 0.5
+        anim.removedOnCompletion = true
+        anim.fillMode = kCAFillModeForwards
+        anim.delegate = self
+        return anim
     }
     
     
