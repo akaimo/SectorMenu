@@ -24,6 +24,7 @@ public class SectorMenu: UIView {
     
     private let internalRadiusRatio: CGFloat = 20.0 / 56.0
     public var cellRadiusRatio: CGFloat      = 0.38
+    private var cellCenter: CGPoint?
     
     private let actionBtn = SectorMenuCircle()
     private let plusLayer   = CAShapeLayer()
@@ -58,7 +59,7 @@ public class SectorMenu: UIView {
         self.backgroundColor = UIColor.clearColor()
         userInteractionEnabled = true
         
-        drawPlus(plusRotation)
+        cellCenter = CGPoint(x: self.center.x - self.frame.origin.x, y: self.center.y - self.frame.origin.y)
         
         actionBtn.radius = self.frame.size.width * 0.5
         actionBtn.frame = CGRect(x: 0, y: 0, width: self.frame.size.width, height: self.frame.size.height)
@@ -126,7 +127,7 @@ public class SectorMenu: UIView {
     private func insertCell(cell: SectorMenuCell) {
         cell.color  = self.color
         cell.radius = self.frame.width * cellRadiusRatio
-        cell.center = CGPoint(x: self.center.x - self.frame.origin.x, y: self.center.y - self.frame.origin.y)
+        cell.center = cellCenter!
         cell.actionButton = self
         insertSubview(cell, belowSubview: actionBtn)
     }
@@ -152,7 +153,7 @@ public class SectorMenu: UIView {
         for var i=1; i<=cells.count; i++ {
             UIView.animateWithDuration(0.2,
                 animations: {() -> Void  in
-                    cells[i-1].center.y += CGFloat(60 * i)
+                    cells[i-1].center = self.cellCenter!
             })
         }
         
