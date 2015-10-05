@@ -14,7 +14,6 @@
 		998CF4CF1BB2552C009B50B4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 998CF4CD1BB2552C009B50B4 /* LaunchScreen.storyboard */; };
 		998CF4DA1BB2552C009B50B4 /* SectorMenuTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998CF4D91BB2552C009B50B4 /* SectorMenuTests.swift */; };
 		998CF4E51BB2552C009B50B4 /* SectorMenuUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998CF4E41BB2552C009B50B4 /* SectorMenuUITests.swift */; };
-		998CF4F31BB25B0A009B50B4 /* SectorMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998CF4F21BB25B0A009B50B4 /* SectorMenuItem.swift */; settings = {ASSET_TAGS = (); }; };
 		998CF4F51BB25B32009B50B4 /* SectorMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998CF4F41BB25B32009B50B4 /* SectorMenu.swift */; settings = {ASSET_TAGS = (); }; };
 		998CF5021BB96F3F009B50B4 /* SectorMenuCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998CF5011BB96F3F009B50B4 /* SectorMenuCircle.swift */; settings = {ASSET_TAGS = (); }; };
 		998CF5041BBA47B7009B50B4 /* SectorMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998CF5031BBA47B7009B50B4 /* SectorMenuCell.swift */; settings = {ASSET_TAGS = (); }; };
@@ -51,7 +50,6 @@
 		998CF4E01BB2552C009B50B4 /* SectorMenuUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SectorMenuUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		998CF4E41BB2552C009B50B4 /* SectorMenuUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectorMenuUITests.swift; sourceTree = "<group>"; };
 		998CF4E61BB2552C009B50B4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		998CF4F21BB25B0A009B50B4 /* SectorMenuItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectorMenuItem.swift; sourceTree = "<group>"; };
 		998CF4F41BB25B32009B50B4 /* SectorMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectorMenu.swift; sourceTree = "<group>"; };
 		998CF5011BB96F3F009B50B4 /* SectorMenuCircle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectorMenuCircle.swift; sourceTree = "<group>"; };
 		998CF5031BBA47B7009B50B4 /* SectorMenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectorMenuCell.swift; sourceTree = "<group>"; };
@@ -138,7 +136,6 @@
 			isa = PBXGroup;
 			children = (
 				998CF4F41BB25B32009B50B4 /* SectorMenu.swift */,
-				998CF4F21BB25B0A009B50B4 /* SectorMenuItem.swift */,
 				998CF5031BBA47B7009B50B4 /* SectorMenuCell.swift */,
 				998CF5011BB96F3F009B50B4 /* SectorMenuCircle.swift */,
 			);
@@ -280,7 +277,6 @@
 				998CF5041BBA47B7009B50B4 /* SectorMenuCell.swift in Sources */,
 				998CF4C71BB2552C009B50B4 /* ViewController.swift in Sources */,
 				998CF4C51BB2552C009B50B4 /* AppDelegate.swift in Sources */,
-				998CF4F31BB25B0A009B50B4 /* SectorMenuItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

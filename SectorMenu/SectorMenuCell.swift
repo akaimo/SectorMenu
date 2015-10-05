@@ -15,9 +15,10 @@ public class SectorMenuCell: SectorMenuCircle {
     
     public var responsible = true
     public var imageView = UIImageView()
+    weak var actionButton: SectorMenu?
     
     // for implement responsible color
-    private var originalColor: UIColor
+    var originalColor: UIColor
     
     public override var frame: CGRect {
         didSet {
@@ -67,21 +68,15 @@ public class SectorMenuCell: SectorMenuCircle {
         imageView.frame = CGRect(x: frame.width - frame.width * internalRatio, y: frame.height - frame.height * internalRatio, width: size.width, height: size.height)
     }
     
-    func update(key: CGFloat, open: Bool) {
-        for subview in self.subviews {
-            if let view = subview as? UIView {
-                let ratio = max(2 * (key * key - 0.5), 0)
-                view.alpha = open ? ratio : -ratio
-            }
-        }
-    }
-    
     
     // MARK: UIView
     public override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         if responsible {
             originalColor = color
-//            color = originalColor.white(0.5)
+            let scale: CGFloat = 0.5
+            let old = CGColorGetComponents(originalColor.CGColor)
+            let newColor = UIColor(red: old[0] + (1.0 - old[0]) * scale, green: old[1] + (1.0 - old[1]) * scale, blue: old[2] + (1.0 - old[2]) * scale, alpha: 1.0)
+            color = newColor
             setNeedsDisplay()
         }
     }
@@ -95,7 +90,7 @@ public class SectorMenuCell: SectorMenuCircle {
     
     override public func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         color = originalColor
-//        actionButton?.didTappedCell(self)
+        actionButton?.didTappedCell(self)
     }
 
 }
