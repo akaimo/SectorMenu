@@ -24,6 +24,7 @@ public class SectorMenu: UIView {
     
     private let internalRadiusRatio: CGFloat = 20.0 / 56.0
     public var cellRadiusRatio: CGFloat      = 0.38
+    private var cellCenter: CGPoint?
     
     private let actionBtn = SectorMenuCircle()
     private let plusLayer   = CAShapeLayer()
@@ -48,12 +49,17 @@ public class SectorMenu: UIView {
     }
     
     
+    public override func drawRect(rect: CGRect) {
+        drawPlus(plusRotation)
+    }
+    
+    
     // MARK: private
     private func setup() {
         self.backgroundColor = UIColor.clearColor()
         userInteractionEnabled = true
         
-        drawPlus(plusRotation)
+        cellCenter = CGPoint(x: self.center.x - self.frame.origin.x, y: self.center.y - self.frame.origin.y)
         
         actionBtn.radius = self.frame.size.width * 0.5
         actionBtn.frame = CGRect(x: 0, y: 0, width: self.frame.size.width, height: self.frame.size.height)
@@ -97,7 +103,8 @@ public class SectorMenu: UIView {
     }
     
     public func open() {
-        // TODO: plusを回転させる
+        self.plusLayer.addAnimation(plusKeyframe(true), forKey: "plusRot")
+        self.plusRotation = CGFloat(M_PI * 0.25) // 45 degree
         
         let cells = cellArray()
         for cell in cells {
@@ -109,7 +116,8 @@ public class SectorMenu: UIView {
     }
     
     public func close() {
-        // TODO: plusの回転を元に戻す
+        self.plusLayer.addAnimation(plusKeyframe(false), forKey: "plusRot")
+        self.plusRotation = 0
         
         let cells = cellArray()
         closingCell(cells)
@@ -119,7 +127,7 @@ public class SectorMenu: UIView {
     private func insertCell(cell: SectorMenuCell) {
         cell.color  = self.color
         cell.radius = self.frame.width * cellRadiusRatio
-        cell.center = CGPoint(x: self.center.x - self.frame.origin.x, y: self.center.y - self.frame.origin.y)
+        cell.center = cellCenter!
         cell.actionButton = self
         insertSubview(cell, belowSubview: actionBtn)
     }
@@ -145,12 +153,13 @@ public class SectorMenu: UIView {
         for var i=1; i<=cells.count; i++ {
             UIView.animateWithDuration(0.2,
                 animations: {() -> Void  in
-                    cells[i-1].center.y += CGFloat(60 * i)
+                    cells[i-1].center = self.cellCenter!
             })
         }
         
         for cell in cells {
             cell.userInteractionEnabled = false
+            cell.removeFromSuperview()
         }
         
         isClosed = true
@@ -189,6 +198,26 @@ public class SectorMenu: UIView {
         let x = center.x + radius * cos(rad)
         let y = center.y + radius * sin(rad)
         return CGPoint(x: x, y: y)
+    }
+    
+    private func plusKeyframe(closed: Bool) -> CAKeyframeAnimation {
+        let paths = closed ? [
+            pathPlus(CGFloat(M_PI * 0)),
+            pathPlus(CGFloat(M_PI * 0.125)),
+            pathPlus(CGFloat(M_PI * 0.25)),
+            ] : [
+                pathPlus(CGFloat(M_PI * 0.25)),
+                pathPlus(CGFloat(M_PI * 0.125)),
+                pathPlus(CGFloat(M_PI * 0)),
+        ]
+        let anim = CAKeyframeAnimation(keyPath: "path")
+        anim.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        anim.values = paths.map { $0.CGPath }
+        anim.duration = 0.5
+        anim.removedOnCompletion = true
+        anim.fillMode = kCAFillModeForwards
+        anim.delegate = self
+        return anim
     }
     
     

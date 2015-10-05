@@ -15,19 +15,8 @@ class ViewController: UIViewController, SectorMenuDataSource, SectorMenuDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let circle: SectorMenuCircle = SectorMenuCircle(center: CGPoint(x: 100, y: 100), radius: 25, color: UIColor.blueColor())
-        let img = UIImageView(image: UIImage(named: "Place"))
-        img.frame = CGRect(x: 10, y: 10, width: 30, height: 30)
-        circle.addSubview(img)
-        self.view.addSubview(circle)
-        
-        let cell: SectorMenuCell = SectorMenuCell(icon: UIImage(named: "Place")!)
-        cell.radius = 25
-        cell.color = UIColor.blueColor()
-        cell.frame = CGRect(x: 200, y: 200, width: 50, height: 50)
-        self.view.addSubview(cell)
-        
-        let sectorMenu: SectorMenu = SectorMenu(frame: CGRect(x: 150, y: 300, width: 50, height: 50))
+        let btnFrame = CGRect(x: self.view.frame.size.width - 80, y: self.view.frame.size.height - 80, width: 50, height: 50)
+        let sectorMenu: SectorMenu = SectorMenu(frame: btnFrame)
         sectorMenu.delegate = self
         sectorMenu.dataSource = self
         self.view.addSubview(sectorMenu)
