@@ -159,6 +159,7 @@ public class SectorMenu: UIView {
         
         for cell in cells {
             cell.userInteractionEnabled = false
+            cell.removeFromSuperview()
         }
         
         isClosed = true
