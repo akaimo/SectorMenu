@@ -133,12 +133,44 @@ public class SectorMenu: UIView {
     }
     
     private func openingCell(cells: [SectorMenuCell]) {
-        // TODO: cellを展開するアニメーションをつける
-        for var i=1; i<=cells.count; i++ {
-            UIView.animateWithDuration(0.5,
-                animations: {() -> Void  in
-                    cells[i-1].center.y -= CGFloat(60 * i)
-            })
+        let distance: CGFloat = 100.0
+        let radi = M_PI_2 * 1/4
+        
+        for var i=0; i<cells.count; i++ {
+            let startPoint: CGPoint = cells[i].layer.position
+            
+            let first = CABasicAnimation(keyPath: "position")
+            first.fromValue = [startPoint.x, startPoint.y]
+            first.toValue = [startPoint.x - distance, startPoint.y]
+            first.duration = 0.15
+            first.removedOnCompletion = true
+            first.fillMode = kCAFillModeForwards
+            
+            let anim = CAKeyframeAnimation(keyPath: "position")
+            var value: [Array<CGFloat>] = [[startPoint.x - distance, startPoint.y]]
+            
+            var endPoint: CGPoint = CGPointMake(startPoint.x - distance, startPoint.y)
+            for var j=1; j<=i; j++ {
+                let count = Double(j) * 2.0
+                value.append([startPoint.x - distance * CGFloat(cos(radi * (count - 1.0))), startPoint.y - distance * CGFloat(sin(radi * (count - 1.0)))])
+                value.append([startPoint.x - distance * CGFloat(cos(radi * count)), startPoint.y - distance * CGFloat(sin(radi * count))])
+                endPoint = CGPointMake(startPoint.x - distance * CGFloat(cos(radi * count)), startPoint.y - distance * CGFloat(sin(radi * count)))
+            }
+            
+            anim.values = value
+            anim.beginTime = 0.15
+            anim.duration = 0.4
+            anim.removedOnCompletion = true
+            anim.fillMode = kCAFillModeForwards
+            
+            let group = CAAnimationGroup()
+            group.animations = [first, anim]
+            group.duration = 0.55
+            group.removedOnCompletion = true
+            group.fillMode = kCAFillModeForwards
+            
+            cells[i].layer.position = endPoint
+            cells[i].layer.addAnimation(group, forKey: nil)
         }
         
         for cell in cells {
@@ -159,10 +191,16 @@ public class SectorMenu: UIView {
         
         for cell in cells {
             cell.userInteractionEnabled = false
-            cell.removeFromSuperview()
+//            cell.removeFromSuperview() // TODO: アニメーション完了後に削除するよに
         }
         
         isClosed = true
+    }
+    
+    private func openingAnimation() -> CABasicAnimation {
+        let beforeOpenAnimation = CABasicAnimation(keyPath: "before")
+        
+        return beforeOpenAnimation
     }
     
     
@@ -213,7 +251,7 @@ public class SectorMenu: UIView {
         let anim = CAKeyframeAnimation(keyPath: "path")
         anim.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
         anim.values = paths.map { $0.CGPath }
-        anim.duration = 0.5
+        anim.duration = closed ? 0.5 : 0.2
         anim.removedOnCompletion = true
         anim.fillMode = kCAFillModeForwards
         anim.delegate = self
