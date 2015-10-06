@@ -76,16 +76,6 @@ public class SectorMenuCircle: UIView {
         return circleLayer
     }
     
-//    func circlePoint(rad: CGFloat) -> CGPoint {
-//        return circlePoint(center, radius: radius, rad: rad)
-//    }
-//
-//    private func circlePoint(center: CGPoint, radius: CGFloat, rad: CGFloat) -> CGPoint {
-//        let x = center.x + radius * cos(rad)
-//        let y = center.y + radius * sin(rad)
-//        return CGPoint(x: x, y: y)
-//    }
-    
     public override func drawRect(rect: CGRect) {
         drawCircle()
     }

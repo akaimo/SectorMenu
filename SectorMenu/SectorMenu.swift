@@ -102,6 +102,8 @@ public class SectorMenu: UIView {
         }
     }
     
+    
+    // MARK: cell animation
     public func open() {
         self.plusLayer.addAnimation(plusKeyframe(true), forKey: "plusRot")
         self.plusRotation = CGFloat(M_PI * 0.25) // 45 degree
@@ -137,35 +139,47 @@ public class SectorMenu: UIView {
         let radi = M_PI_2 * 1/4
         
         for var i=0; i<cells.count; i++ {
+            // TODO: リファクタリング
             let startPoint: CGPoint = cells[i].layer.position
+            let firstTime = 0.15
             
             let first = CABasicAnimation(keyPath: "position")
             first.fromValue = [startPoint.x, startPoint.y]
             first.toValue = [startPoint.x - distance, startPoint.y]
-            first.duration = 0.15
+            first.duration = firstTime
             first.removedOnCompletion = true
             first.fillMode = kCAFillModeForwards
             
-            let anim = CAKeyframeAnimation(keyPath: "position")
-            var value: [Array<CGFloat>] = [[startPoint.x - distance, startPoint.y]]
             
+            let anim = CAKeyframeAnimation(keyPath: "position")
+            let animTime = 0.4
             var endPoint: CGPoint = CGPointMake(startPoint.x - distance, startPoint.y)
+            var value: [Array<CGFloat>] = [[startPoint.x - distance, startPoint.y]]
             for var j=1; j<=i; j++ {
                 let count = Double(j) * 2.0
-                value.append([startPoint.x - distance * CGFloat(cos(radi * (count - 1.0))), startPoint.y - distance * CGFloat(sin(radi * (count - 1.0)))])
-                value.append([startPoint.x - distance * CGFloat(cos(radi * count)), startPoint.y - distance * CGFloat(sin(radi * count))])
-                endPoint = CGPointMake(startPoint.x - distance * CGFloat(cos(radi * count)), startPoint.y - distance * CGFloat(sin(radi * count)))
+                value.append([
+                    startPoint.x - distance * CGFloat(cos(radi * (count - 1.0))),
+                    startPoint.y - distance * CGFloat(sin(radi * (count - 1.0)))
+                    ])
+                value.append([
+                    startPoint.x - distance * CGFloat(cos(radi * count)),
+                    startPoint.y - distance * CGFloat(sin(radi * count))
+                    ])
+                endPoint = CGPointMake(
+                    startPoint.x - distance * CGFloat(cos(radi * count)),
+                    startPoint.y - distance * CGFloat(sin(radi * count))
+                )
             }
-            
             anim.values = value
-            anim.beginTime = 0.15
-            anim.duration = 0.4
+            anim.beginTime = firstTime
+            anim.duration = animTime
             anim.removedOnCompletion = true
             anim.fillMode = kCAFillModeForwards
             
+            
             let group = CAAnimationGroup()
             group.animations = [first, anim]
-            group.duration = 0.55
+            group.duration = firstTime + animTime
             group.removedOnCompletion = true
             group.fillMode = kCAFillModeForwards
             
@@ -195,12 +209,6 @@ public class SectorMenu: UIView {
         }
         
         isClosed = true
-    }
-    
-    private func openingAnimation() -> CABasicAnimation {
-        let beforeOpenAnimation = CABasicAnimation(keyPath: "before")
-        
-        return beforeOpenAnimation
     }
     
     
