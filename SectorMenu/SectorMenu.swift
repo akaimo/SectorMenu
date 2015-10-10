@@ -181,6 +181,7 @@ public class SectorMenu: UIView {
             anim.values = value
             anim.beginTime = firstTime
             anim.duration = animTime
+            anim.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseIn)
             anim.removedOnCompletion = true
             anim.fillMode = kCAFillModeForwards
             
@@ -195,20 +196,26 @@ public class SectorMenu: UIView {
             cells[i].layer.addAnimation(group, forKey: nil)
         }
         
-        circleView?.transform = CGAffineTransformMakeRotation(CGFloat(M_PI - M_PI/12))
-        let ring = CABasicAnimation(keyPath: "strokeEnd")
-        ring.fromValue = -0.2   // adjust time lag
-        ring.toValue = 1.0
-        ring.duration = firstTime + animTime
-        ring.removedOnCompletion = true
-        ring.fillMode = kCAFillModeForwards
-        var circle: CALayer?
-        for layer in (circleView?.layer.sublayers)! {
-            if layer.name == "ring" {
-                circle = layer
-            }
-        }
-        circle?.addAnimation(ring, forKey: nil)
+//        circleView?.transform = CGAffineTransformMakeRotation(CGFloat(M_PI - M_PI/12))
+//        let ring = CABasicAnimation(keyPath: "strokeEnd")
+//        ring.fromValue = -0.2   // adjust time lag
+//        ring.toValue = 1.0
+//        ring.duration = firstTime + animTime
+//        ring.removedOnCompletion = true
+//        ring.fillMode = kCAFillModeForwards
+//        var circle: CALayer?
+//        for layer in (circleView?.layer.sublayers)! {
+//            if layer.name == "ring" {
+//                circle = layer
+//            }
+//        }
+//        circle?.addAnimation(ring, forKey: nil)
+        circleView?.alpha = 0.0
+        UIView.animateWithDuration(firstTime + animTime,
+            animations: {() -> Void  in
+                circleView?.alpha = 1.0
+        })
+        
         
         for cell in cells {
             cell.userInteractionEnabled = true
