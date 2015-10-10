@@ -116,25 +116,7 @@ public class SectorMenu: UIView {
         
         circleView = UIView(frame: CGRectMake(-100, -100, 250, 250)) // 半径, 半径 * 2 + self.frame.size
         circleView!.backgroundColor = UIColor.clearColor()
-        // TODO: circle layer
-        let circleCenter = CGPointMake(circleView!.frame.width/2, circleView!.frame.height/2)
-        
-        let bigPath: UIBezierPath = UIBezierPath()
-        bigPath.moveToPoint(circleCenter)
-        bigPath.addArcWithCenter(circleCenter, radius: 250/2, startAngle: 0.0, endAngle: CGFloat(M_PI * 2), clockwise: true)
-        let bigLayer = CAShapeLayer()
-        bigLayer.fillColor = UIColor(red: 67/225, green: 135/225, blue: 233/225, alpha: 0.5).CGColor
-        bigLayer.path = bigPath.CGPath
-        
-        let minPath: UIBezierPath = UIBezierPath()
-        minPath.moveToPoint(circleCenter)
-        minPath.addArcWithCenter(circleCenter, radius: 250/2 - 50, startAngle: 0.0, endAngle: CGFloat(M_PI * 2), clockwise: true)
-        let minLayer = CAShapeLayer()
-        minLayer.fillColor = UIColor.whiteColor().CGColor
-        minLayer.path = minPath.CGPath
-        
-        bigLayer.addSublayer(minLayer)
-        circleView!.layer.addSublayer(bigLayer)
+        ringLayer(circleView!)
         insertSubview(circleView!, atIndex: 0)
         
         openingCell(cells)
@@ -234,6 +216,29 @@ public class SectorMenu: UIView {
         }
         
         isClosed = true
+    }
+    
+    private func ringLayer(circleView: UIView) {
+        let circleCenter = CGPointMake(circleView.frame.width/2, circleView.frame.height/2)
+        
+        let bigPath: UIBezierPath = UIBezierPath()
+        bigPath.moveToPoint(circleCenter)
+        // TODO: customizable
+        bigPath.addArcWithCenter(circleCenter, radius: 250/2, startAngle: 0.0, endAngle: CGFloat(M_PI * 2), clockwise: true)
+        let bigLayer = CAShapeLayer()
+        bigLayer.fillColor = UIColor(red: 67/225, green: 135/225, blue: 233/225, alpha: 0.5).CGColor
+        bigLayer.path = bigPath.CGPath
+        
+        let minPath: UIBezierPath = UIBezierPath()
+        minPath.moveToPoint(circleCenter)
+        // TODO: customizable
+        minPath.addArcWithCenter(circleCenter, radius: 250/2 - 50, startAngle: 0.0, endAngle: CGFloat(M_PI * 2), clockwise: true)
+        let minLayer = CAShapeLayer()
+        minLayer.fillColor = UIColor.whiteColor().CGColor
+        minLayer.path = minPath.CGPath
+        
+        bigLayer.addSublayer(minLayer)
+        circleView.layer.addSublayer(bigLayer)
     }
     
     
