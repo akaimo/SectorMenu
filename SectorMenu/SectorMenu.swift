@@ -25,6 +25,7 @@ public class SectorMenu: UIView {
     private let internalRadiusRatio: CGFloat = 20.0 / 56.0
     public var cellRadiusRatio: CGFloat      = 0.38
     private var cellCenter: CGPoint?
+    public var ringRadius: CGFloat = 100
     
     private let actionBtn = SectorMenuCircle()
     private let plusLayer   = CAShapeLayer()
@@ -114,7 +115,7 @@ public class SectorMenu: UIView {
             insertCell(cell)
         }
         
-        circleView = UIView(frame: CGRectMake(-100, -100, 250, 250)) // 半径, 半径 * 2 + self.frame.size
+        circleView = UIView(frame: CGRectMake(-1 * ringRadius, -1 * ringRadius, ringRadius * 2 + bounds.width , ringRadius * 2 + bounds.height))
         circleView!.backgroundColor = UIColor.clearColor()
         ringLayer(circleView!)
         insertSubview(circleView!, atIndex: 0)
@@ -220,21 +221,23 @@ public class SectorMenu: UIView {
     
     private func ringLayer(circleView: UIView) {
         let circleCenter = CGPointMake(circleView.frame.width/2, circleView.frame.height/2)
+        let bigRadius = (ringRadius * 2 + bounds.width) / 2
+        let minRadius = bigRadius - 50
+        let bigColor = UIColor(red: 67/225, green: 135/225, blue: 233/225, alpha: 0.5)
+        let minColor = UIColor.whiteColor()
         
         let bigPath: UIBezierPath = UIBezierPath()
         bigPath.moveToPoint(circleCenter)
-        // TODO: customizable
-        bigPath.addArcWithCenter(circleCenter, radius: 250/2, startAngle: 0.0, endAngle: CGFloat(M_PI * 2), clockwise: true)
+        bigPath.addArcWithCenter(circleCenter, radius: bigRadius, startAngle: 0.0, endAngle: CGFloat(M_PI * 2), clockwise: true)
         let bigLayer = CAShapeLayer()
-        bigLayer.fillColor = UIColor(red: 67/225, green: 135/225, blue: 233/225, alpha: 0.5).CGColor
+        bigLayer.fillColor = bigColor.CGColor
         bigLayer.path = bigPath.CGPath
         
         let minPath: UIBezierPath = UIBezierPath()
         minPath.moveToPoint(circleCenter)
-        // TODO: customizable
-        minPath.addArcWithCenter(circleCenter, radius: 250/2 - 50, startAngle: 0.0, endAngle: CGFloat(M_PI * 2), clockwise: true)
+        minPath.addArcWithCenter(circleCenter, radius: minRadius, startAngle: 0.0, endAngle: CGFloat(M_PI * 2), clockwise: true)
         let minLayer = CAShapeLayer()
-        minLayer.fillColor = UIColor.whiteColor().CGColor
+        minLayer.fillColor = minColor.CGColor
         minLayer.path = minPath.CGPath
         
         bigLayer.addSublayer(minLayer)
