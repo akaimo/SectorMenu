@@ -113,6 +113,11 @@ public class SectorMenu: UIView {
             insertCell(cell)
         }
         
+        let circleView = UIView(frame: CGRectMake(-100, -100, 250, 250)) // 半径, 半径 * 2 + self.frame.size
+        circleView.backgroundColor = UIColor.clearColor()
+        // TODO: circle layer
+        insertSubview(circleView, atIndex: 0)
+        
         openingCell(cells)
         setNeedsDisplay()
     }
