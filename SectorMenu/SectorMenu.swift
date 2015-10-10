@@ -205,15 +205,14 @@ public class SectorMenu: UIView {
     private func closingCell(cells: [SectorMenuCell]) {
         // TODO: cellを閉じるアニメーションをつける
         for var i=1; i<=cells.count; i++ {
+            let cell = cells[i-1]
+            cell.userInteractionEnabled = false
             UIView.animateWithDuration(0.2,
                 animations: {() -> Void  in
-                    cells[i-1].center = self.cellCenter!
+                    cell.center = self.cellCenter!
+                }, completion: {(Bool) -> Void in
+                    cell.removeFromSuperview()
             })
-        }
-        
-        for cell in cells {
-            cell.userInteractionEnabled = false
-//            cell.removeFromSuperview() // TODO: アニメーション完了後に削除するよに
         }
         
         isClosed = true
