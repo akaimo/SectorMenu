@@ -195,12 +195,11 @@ public class SectorMenu: UIView {
             cells[i].layer.addAnimation(group, forKey: nil)
         }
         
-        circleView?.transform = CGAffineTransformMakeRotation(CGFloat(M_PI))
+        circleView?.transform = CGAffineTransformMakeRotation(CGFloat(M_PI - M_PI/12))
         let ring = CABasicAnimation(keyPath: "strokeEnd")
-        ring.fromValue = 0.0
+        ring.fromValue = -0.2   // adjust time lag
         ring.toValue = 1.0
-//        ring.beginTime = firstTime
-        ring.duration = animTime
+        ring.duration = firstTime + animTime
         ring.removedOnCompletion = true
         ring.fillMode = kCAFillModeForwards
         var circle: CALayer?
