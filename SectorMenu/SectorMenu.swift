@@ -219,21 +219,18 @@ public class SectorMenu: UIView {
     }
     
     private func ringLayer(circleView: UIView) {
-        let bigSide = ringRadius * 2 + bounds.width
-        let minSide = bigSide - frame.size.width * 2
-        let bigColor = UIColor(red: 67/225, green: 135/225, blue: 233/225, alpha: 0.5)
-        let minColor = UIColor.whiteColor()
+        let lineWidth = frame.size.width
+        let side = ringRadius * 2 + bounds.width - lineWidth
+        let lineColor = UIColor(red: 67/225, green: 135/225, blue: 233/225, alpha: 0.5)
+        let centerColor = UIColor.whiteColor()
         
-        let bigLayer = CAShapeLayer()
-        bigLayer.path = UIBezierPath(ovalInRect: CGRect(x: 0, y: 0, width: bigSide, height: bigSide)).CGPath
-        bigLayer.fillColor = bigColor.CGColor
-        
-        let minLayer = CAShapeLayer()
-        minLayer.path = UIBezierPath(ovalInRect: CGRect(x: frame.size.width, y: frame.size.height, width: minSide, height: minSide)).CGPath
-        minLayer.fillColor = minColor.CGColor
-        
-        bigLayer.addSublayer(minLayer)
-        circleView.layer.addSublayer(bigLayer)
+        let ringLayer = CAShapeLayer()
+        ringLayer.path = UIBezierPath(ovalInRect: CGRect(x: lineWidth / 2, y: lineWidth / 2, width: side, height: side)).CGPath
+        ringLayer.lineWidth = lineWidth
+        ringLayer.strokeColor = lineColor.CGColor
+        ringLayer.fillColor = centerColor.CGColor
+       
+        circleView.layer.addSublayer(ringLayer)
     }
     
     
