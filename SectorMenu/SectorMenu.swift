@@ -145,11 +145,12 @@ public class SectorMenu: UIView {
     private func openingCell(cells: [SectorMenuCell]) {
         let distance: CGFloat = 100.0
         let radi = M_PI_2 * 1/4
+        let firstTime = 0.15
+        let animTime = 0.4
         
         for var i=0; i<cells.count; i++ {
             // TODO: リファクタリング
             let startPoint: CGPoint = cells[i].layer.position
-            let firstTime = 0.15
             
             let first = CABasicAnimation(keyPath: "position")
             first.fromValue = [startPoint.x, startPoint.y]
@@ -160,7 +161,6 @@ public class SectorMenu: UIView {
             
             
             let anim = CAKeyframeAnimation(keyPath: "position")
-            let animTime = 0.4
             var endPoint: CGPoint = CGPointMake(startPoint.x - distance, startPoint.y)
             var value: [Array<CGFloat>] = [[startPoint.x - distance, startPoint.y]]
             for var j=1; j<=i; j++ {
@@ -194,6 +194,22 @@ public class SectorMenu: UIView {
             cells[i].layer.position = endPoint
             cells[i].layer.addAnimation(group, forKey: nil)
         }
+        
+        circleView?.transform = CGAffineTransformMakeRotation(CGFloat(M_PI))
+        let ring = CABasicAnimation(keyPath: "strokeEnd")
+        ring.fromValue = 0.0
+        ring.toValue = 1.0
+//        ring.beginTime = firstTime
+        ring.duration = animTime
+        ring.removedOnCompletion = true
+        ring.fillMode = kCAFillModeForwards
+        var circle: CALayer?
+        for layer in (circleView?.layer.sublayers)! {
+            if layer.name == "ring" {
+                circle = layer
+            }
+        }
+        circle?.addAnimation(ring, forKey: nil)
         
         for cell in cells {
             cell.userInteractionEnabled = true
@@ -229,6 +245,7 @@ public class SectorMenu: UIView {
         ringLayer.lineWidth = lineWidth
         ringLayer.strokeColor = lineColor.CGColor
         ringLayer.fillColor = centerColor.CGColor
+        ringLayer.name = "ring"
        
         circleView.layer.addSublayer(ringLayer)
     }
