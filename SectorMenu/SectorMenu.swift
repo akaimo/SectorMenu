@@ -29,6 +29,7 @@ public class SectorMenu: UIView {
     private let actionBtn = SectorMenuCircle()
     private let plusLayer   = CAShapeLayer()
     private var plusRotation: CGFloat = 0
+    private var circleView: UIView?
     
     public var delegate:   SectorMenuDelegate?
     public var dataSource: SectorMenuDataSource?
@@ -113,10 +114,28 @@ public class SectorMenu: UIView {
             insertCell(cell)
         }
         
-        let circleView = UIView(frame: CGRectMake(-100, -100, 250, 250)) // 半径, 半径 * 2 + self.frame.size
-        circleView.backgroundColor = UIColor.clearColor()
+        circleView = UIView(frame: CGRectMake(-100, -100, 250, 250)) // 半径, 半径 * 2 + self.frame.size
+        circleView!.backgroundColor = UIColor.clearColor()
         // TODO: circle layer
-        insertSubview(circleView, atIndex: 0)
+        let circleCenter = CGPointMake(circleView!.frame.width/2, circleView!.frame.height/2)
+        
+        let bigPath: UIBezierPath = UIBezierPath()
+        bigPath.moveToPoint(circleCenter)
+        bigPath.addArcWithCenter(circleCenter, radius: 250/2, startAngle: 0.0, endAngle: CGFloat(M_PI * 2), clockwise: true)
+        let bigLayer = CAShapeLayer()
+        bigLayer.fillColor = UIColor(red: 67/225, green: 135/225, blue: 233/225, alpha: 0.5).CGColor
+        bigLayer.path = bigPath.CGPath
+        
+        let minPath: UIBezierPath = UIBezierPath()
+        minPath.moveToPoint(circleCenter)
+        minPath.addArcWithCenter(circleCenter, radius: 250/2 - 50, startAngle: 0.0, endAngle: CGFloat(M_PI * 2), clockwise: true)
+        let minLayer = CAShapeLayer()
+        minLayer.fillColor = UIColor.whiteColor().CGColor
+        minLayer.path = minPath.CGPath
+        
+        bigLayer.addSublayer(minLayer)
+        circleView!.layer.addSublayer(bigLayer)
+        insertSubview(circleView!, atIndex: 0)
         
         openingCell(cells)
         setNeedsDisplay()
@@ -128,6 +147,7 @@ public class SectorMenu: UIView {
         
         let cells = cellArray()
         closingCell(cells)
+        circleView?.removeFromSuperview()
         setNeedsDisplay()
     }
     
