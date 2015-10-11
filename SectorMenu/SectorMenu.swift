@@ -104,6 +104,10 @@ public class SectorMenu: UIView {
         }
     }
     
+    internal func panGesture(sender: UIPanGestureRecognizer){
+        print("hoge")
+    }
+    
     
     // MARK: cell animation
     public func open() {
@@ -119,6 +123,9 @@ public class SectorMenu: UIView {
         circleView!.backgroundColor = UIColor.clearColor()
         ringLayer(circleView!)
         insertSubview(circleView!, atIndex: 0)
+        
+        let pan = UIPanGestureRecognizer(target: self, action: "panGesture:")
+        circleView?.addGestureRecognizer(pan)
         
         openingCell(cells)
         setNeedsDisplay()
@@ -338,6 +345,13 @@ public class SectorMenu: UIView {
                 if cell.userInteractionEnabled {
                     return cell.hitTest(pointForTargetView, withEvent: event)
                 }
+            }
+        }
+        
+        let circlViewPoint = circleView?.convertPoint(point, fromView: self)
+        if let circle = circlViewPoint {
+            if CGRectContainsPoint((circleView?.bounds)!, circlViewPoint!) {
+                return circleView?.hitTest(circle, withEvent: event)
             }
         }
         
