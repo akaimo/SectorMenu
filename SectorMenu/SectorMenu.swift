@@ -36,6 +36,7 @@ public class SectorMenu: UIView {
     public var dataSource: SectorMenuDataSource?
     
     public var isClosed = true
+    private var isPan = false
     private var panPointReference: CGPoint?
     
     public var color: UIColor = UIColor(red: 82/255.0, green: 112/255.0, blue: 235/255.0, alpha: 1.0)
@@ -341,19 +342,25 @@ public class SectorMenu: UIView {
     
     // MARK: UIView
     public override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        let scale: CGFloat = 0.5
-        let old = CGColorGetComponents(color.CGColor)
-        let newColor = UIColor(red: old[0] + (1.0 - old[0]) * scale, green: old[1] + (1.0 - old[1]) * scale, blue: old[2] + (1.0 - old[2]) * scale, alpha: 1.0)
-        actionBtn.color = newColor
+        if !isPan {
+            let scale: CGFloat = 0.5
+            let old = CGColorGetComponents(color.CGColor)
+            let newColor = UIColor(red: old[0] + (1.0 - old[0]) * scale, green: old[1] + (1.0 - old[1]) * scale, blue: old[2] + (1.0 - old[2]) * scale, alpha: 1.0)
+            actionBtn.color = newColor
+        }
     }
     
     public override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
-        actionBtn.color = color
+        if !isPan {
+            actionBtn.color = color
+        }
     }
     
     override public func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         actionBtn.color = color
-        didTaped()
+        if !isPan {
+            didTaped()
+        }
     }
     
     public override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
@@ -370,6 +377,10 @@ public class SectorMenu: UIView {
         let circlViewPoint = circleView?.convertPoint(point, fromView: self)
         if let circle = circlViewPoint {
             if CGRectContainsPoint((circleView?.bounds)!, circlViewPoint!) {
+                isPan = true
+                if CGRectContainsPoint(actionBtn.bounds, point) {   // close button tap
+                    isPan = false
+                }
                 return circleView?.hitTest(circle, withEvent: event)
             }
         }
