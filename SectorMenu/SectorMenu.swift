@@ -109,19 +109,19 @@ public class SectorMenu: UIView {
     internal func panGesture(sender: UIPanGestureRecognizer){
         let currentPoint = sender.translationInView(self)
         if let _ = panPointReference {
-            print("currentPoint: \(currentPoint)")
+//            print("currentPoint: \(currentPoint)")
         } else if sender.state == .Began {
-            print(".Began")
+//            print(".Began")
             panPointReference = currentPoint
         }
         
         if sender.state == .Ended {
-            print(".Ended")
+//            print(".Ended")
             if let point = panPointReference {
-                if currentPoint.y > point.y {
-                    print("下")
-                } else {
-                    print("上")
+                if currentPoint.y > point.y {   // down
+                    
+                } else {                        // up
+                    
                 }
             }
             panPointReference = nil
@@ -267,25 +267,9 @@ public class SectorMenu: UIView {
         isClosed = true
     }
     
-    private func ringLayer(circleView: UIView) {
-        let lineWidth = frame.size.width
-        let side = ringRadius * 2 + bounds.width - lineWidth
-        let lineColor = UIColor(red: 67/225, green: 135/225, blue: 233/225, alpha: 0.5)
-        let centerColor = UIColor.whiteColor()
-        
-        let ringLayer = CAShapeLayer()
-        ringLayer.path = UIBezierPath(ovalInRect: CGRect(x: lineWidth / 2, y: lineWidth / 2, width: side, height: side)).CGPath
-        ringLayer.lineWidth = lineWidth
-        ringLayer.strokeColor = lineColor.CGColor
-        ringLayer.fillColor = centerColor.CGColor
-        ringLayer.name = "ring"
-       
-        circleView.layer.addSublayer(ringLayer)
-    }
     
     
-    
-    // MARK: plus
+    // MARK: layer
     private func drawPlus(rotation: CGFloat) {
         plusLayer.frame = CGRect(origin: CGPointZero, size: self.frame.size)
         plusLayer.lineCap = kCALineCapRound
@@ -336,6 +320,22 @@ public class SectorMenu: UIView {
         anim.fillMode = kCAFillModeForwards
         anim.delegate = self
         return anim
+    }
+    
+    private func ringLayer(circleView: UIView) {
+        let lineWidth = frame.size.width
+        let side = ringRadius * 2 + bounds.width - lineWidth
+        let lineColor = UIColor(red: 67/225, green: 135/225, blue: 233/225, alpha: 0.5) // TODO: customizable
+        let centerColor = UIColor.whiteColor()
+        
+        let ringLayer = CAShapeLayer()
+        ringLayer.path = UIBezierPath(ovalInRect: CGRect(x: lineWidth / 2, y: lineWidth / 2, width: side, height: side)).CGPath
+        ringLayer.lineWidth = lineWidth
+        ringLayer.strokeColor = lineColor.CGColor
+        ringLayer.fillColor = centerColor.CGColor
+        ringLayer.name = "ring"
+        
+        circleView.layer.addSublayer(ringLayer)
     }
     
     
