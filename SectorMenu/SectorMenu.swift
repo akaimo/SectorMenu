@@ -36,6 +36,7 @@ public class SectorMenu: UIView {
     public var dataSource: SectorMenuDataSource?
     
     public var isClosed = true
+    private var panPointReference: CGPoint?
     
     public var color: UIColor = UIColor(red: 82/255.0, green: 112/255.0, blue: 235/255.0, alpha: 1.0)
     
@@ -105,7 +106,25 @@ public class SectorMenu: UIView {
     }
     
     internal func panGesture(sender: UIPanGestureRecognizer){
-        print("hoge")
+        let currentPoint = sender.translationInView(self)
+        if let _ = panPointReference {
+            print("currentPoint: \(currentPoint)")
+        } else if sender.state == .Began {
+            print(".Began")
+            panPointReference = currentPoint
+        }
+        
+        if sender.state == .Ended {
+            print(".Ended")
+            if let point = panPointReference {
+                if currentPoint.y > point.y {
+                    print("下")
+                } else {
+                    print("上")
+                }
+            }
+            panPointReference = nil
+        }
     }
     
     
