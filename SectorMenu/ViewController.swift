@@ -15,18 +15,18 @@ class ViewController: UIViewController, SectorMenuDataSource, SectorMenuDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let btnFrame = CGRect(x: self.view.frame.size.width - 100, y: self.view.frame.size.height - 80, width: 50, height: 50)
-//        let btnFrame = CGRect(x: self.view.center.x - 25, y: self.view.center.y - 25, width: 50, height: 50)
+//        let btnFrame = CGRect(x: self.view.frame.size.width - 100, y: self.view.frame.size.height - 80, width: 50, height: 50)
+        let btnFrame = CGRect(x: self.view.center.x - 25, y: self.view.center.y - 25, width: 50, height: 50)
         let sectorMenu: SectorMenu = SectorMenu(frame: btnFrame)
         sectorMenu.delegate = self
         sectorMenu.dataSource = self
         self.view.addSubview(sectorMenu)
         
+        cells.append(SectorMenuCell(icon: UIImage(named: "Art")!))
+        cells.append(SectorMenuCell(icon: UIImage(named: "Brush")!))
+        cells.append(SectorMenuCell(icon: UIImage(named: "Cloud")!))
         cells.append(SectorMenuCell(icon: UIImage(named: "Place")!))
-        cells.append(SectorMenuCell(icon: UIImage(named: "Place")!))
-        cells.append(SectorMenuCell(icon: UIImage(named: "Place")!))
-        cells.append(SectorMenuCell(icon: UIImage(named: "Place")!))
-        cells.append(SectorMenuCell(icon: UIImage(named: "Place")!))
+        cells.append(SectorMenuCell(icon: UIImage(named: "System")!))
         cells.append(SectorMenuCell(icon: UIImage(named: "Place")!))
         cells.append(SectorMenuCell(icon: UIImage(named: "Place")!))
         cells.append(SectorMenuCell(icon: UIImage(named: "Place")!))

@@ -119,9 +119,9 @@ public class SectorMenu: UIView {
 //            print(".Ended")
             if let point = panPointReference {
                 if currentPoint.y > point.y {   // down
-                    
+                    counterclockwise()
                 } else {                        // up
-                    
+                    clockwise()
                 }
             }
             panPointReference = nil
@@ -252,7 +252,7 @@ public class SectorMenu: UIView {
     }
     
     private func closingCell(cells: [SectorMenuCell]) {
-        // TODO: cellを閉じるアニメーションをつける
+        // TODO: cell close animation
         for var i=1; i<=cells.count; i++ {
             let cell = cells[i-1]
             cell.userInteractionEnabled = false
@@ -265,6 +265,17 @@ public class SectorMenu: UIView {
         }
         
         isClosed = true
+    }
+    
+    private func clockwise() {
+        
+    }
+    
+    private func counterclockwise() {
+        let cells = cellArray()
+        for cell in cells {
+            print(cell.center)
+        }
     }
     
     
