@@ -26,6 +26,7 @@ public class SectorMenu: UIView {
     public var cellRadiusRatio: CGFloat      = 0.38
     private var cellCenter: CGPoint?
     public var ringRadius: CGFloat = 100
+    public var distance: CGFloat = 100.0
     
     private let actionBtn = SectorMenuCircle()
     private let plusLayer   = CAShapeLayer()
@@ -170,7 +171,6 @@ public class SectorMenu: UIView {
     }
     
     private func openingCell(cells: [SectorMenuCell]) {
-        let distance: CGFloat = 100.0
         let radi = M_PI_2 * 1/4
         let firstTime = 0.15
         let animTime = 0.4
@@ -273,8 +273,22 @@ public class SectorMenu: UIView {
     
     private func counterclockwise() {
         let cells = cellArray()
-        for cell in cells {
-            print(cell.center)
+        for var i=0; i<cells.count; i++ {
+            let startPoint = cells[i].layer.position
+            let anim = CAKeyframeAnimation(keyPath: "position")
+            //            var endPoint: CGPoint = CGPointMake(startPoint.x - distance, startPoint.y)
+            let value: [Array<CGFloat>] = [
+                [startPoint.x, startPoint.y],
+//                [distance * CGFloat(cos(M_PI_4 * Double(i))) + startPoint.x - distance * CGFloat(cos(M_PI_4 * Double(i + 1))), distance * CGFloat(sin(M_PI_4 * Double(i))) + startPoint.y - distance * CGFloat(sin(M_PI_4 * Double(i + 1)))] // up
+                [distance * CGFloat(cos(M_PI_4 * Double(i))) + startPoint.x - distance * CGFloat(cos(M_PI_4 * Double(i - 1))), distance * CGFloat(sin(M_PI_4 * Double(i))) + startPoint.y - distance * CGFloat(sin(M_PI_4 * Double(i - 1)))] // down
+            ]
+            anim.values = value
+            anim.duration = 0.5
+            anim.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseIn)
+            anim.removedOnCompletion = true
+            anim.fillMode = kCAFillModeForwards
+            
+            cells[i].layer.addAnimation(anim, forKey: nil)
         }
     }
     
