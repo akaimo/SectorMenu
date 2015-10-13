@@ -276,11 +276,13 @@ public class SectorMenu: UIView {
         for var i=0; i<cells.count; i++ {
             let startPoint = cells[i].layer.position
             let anim = CAKeyframeAnimation(keyPath: "position")
-            //            var endPoint: CGPoint = CGPointMake(startPoint.x - distance, startPoint.y)
+            let atan = atan2((cellCenter?.x)! - startPoint.x, (cellCenter?.y)! - startPoint.y)
+            let endPoint: CGPoint = CGPointMake((cellCenter?.x)! + distance * CGFloat(cos(M_PI_4 + Double(atan))),
+                                                (cellCenter?.y)! - distance * CGFloat(cos(M_PI_4 - Double(atan))))
             let value: [Array<CGFloat>] = [
                 [startPoint.x, startPoint.y],
-//                [distance * CGFloat(cos(M_PI_4 * Double(i))) + startPoint.x - distance * CGFloat(cos(M_PI_4 * Double(i + 1))), distance * CGFloat(sin(M_PI_4 * Double(i))) + startPoint.y - distance * CGFloat(sin(M_PI_4 * Double(i + 1)))] // up
-                [distance * CGFloat(cos(M_PI_4 * Double(i))) + startPoint.x - distance * CGFloat(cos(M_PI_4 * Double(i - 1))), distance * CGFloat(sin(M_PI_4 * Double(i))) + startPoint.y - distance * CGFloat(sin(M_PI_4 * Double(i - 1)))] // down
+                [(cellCenter?.x)! + distance * CGFloat(cos(M_PI_4 + Double(atan))),
+                    (cellCenter?.y)! - distance * CGFloat(cos(M_PI_4 - Double(atan)))]
             ]
             anim.values = value
             anim.duration = 0.5
@@ -288,6 +290,7 @@ public class SectorMenu: UIView {
             anim.removedOnCompletion = true
             anim.fillMode = kCAFillModeForwards
             
+            cells[i].layer.position = endPoint
             cells[i].layer.addAnimation(anim, forKey: nil)
         }
     }
