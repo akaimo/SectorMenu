@@ -278,11 +278,11 @@ public class SectorMenu: UIView {
             let anim = CAKeyframeAnimation(keyPath: "position")
             let atan = atan2((cellCenter?.x)! - startPoint.x, (cellCenter?.y)! - startPoint.y)
             let endPoint: CGPoint = CGPointMake((cellCenter?.x)! + distance * CGFloat(cos(M_PI_4 + Double(atan))),
-                                                (cellCenter?.y)! - distance * CGFloat(cos(M_PI_4 - Double(atan))))
+                                                (cellCenter?.y)! - distance * CGFloat(sin(M_PI_4 + Double(atan))))
             let value: [Array<CGFloat>] = [
                 [startPoint.x, startPoint.y],
                 [(cellCenter?.x)! + distance * CGFloat(cos(M_PI_4 + Double(atan))),
-                    (cellCenter?.y)! - distance * CGFloat(cos(M_PI_4 - Double(atan)))]
+                    (cellCenter?.y)! - distance * CGFloat(sin(M_PI_4 + Double(atan)))]
             ]
             anim.values = value
             anim.duration = 0.5
