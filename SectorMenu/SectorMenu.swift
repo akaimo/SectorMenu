@@ -276,19 +276,30 @@ public class SectorMenu: UIView {
         for var i=0; i<cells.count; i++ {
             let startPoint = cells[i].layer.position
             let anim = CAKeyframeAnimation(keyPath: "position")
-            let atan = atan2((cellCenter?.x)! - startPoint.x, (cellCenter?.y)! - startPoint.y)
-            let endPoint: CGPoint = CGPointMake((cellCenter?.x)! + distance * CGFloat(cos(M_PI_4 + Double(atan))),
-                                                (cellCenter?.y)! - distance * CGFloat(sin(M_PI_4 + Double(atan))))
+            let atan = atan2(startPoint.x - (cellCenter?.x)!, startPoint.y - (cellCenter?.y)!)
+            let endPoint: CGPoint = CGPointMake((cellCenter?.x)! + distance * CGFloat(cos(Double(atan) - M_PI_4)),
+                                                (cellCenter?.y)! - distance * CGFloat(sin(Double(atan) - M_PI_4)))
             let value: [Array<CGFloat>] = [
-                [startPoint.x, startPoint.y],
-                [(cellCenter?.x)! + distance * CGFloat(cos(M_PI_4 + Double(atan))),
-                    (cellCenter?.y)! - distance * CGFloat(sin(M_PI_4 + Double(atan)))]
+                [
+                    startPoint.x,
+                    startPoint.y
+                ],
+                [
+                    (cellCenter?.x)! + distance * CGFloat(cos(Double(atan) - M_PI_4 * 5/3)),
+                    (cellCenter?.y)! - distance * CGFloat(sin(Double(atan) - M_PI_4 * 5/3))
+                ],
+                [
+                    (cellCenter?.x)! + distance * CGFloat(cos(Double(atan) - M_PI_4 * 4/3)),
+                    (cellCenter?.y)! - distance * CGFloat(sin(Double(atan) - M_PI_4 * 4/3))
+                ],
+                [
+                    (cellCenter?.x)! + distance * CGFloat(cos(Double(atan) - M_PI_4)),
+                    (cellCenter?.y)! - distance * CGFloat(sin(Double(atan) - M_PI_4))
+                ]
             ]
             anim.values = value
             anim.duration = 0.5
-            anim.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseIn)
             anim.removedOnCompletion = true
-            anim.fillMode = kCAFillModeForwards
             
             cells[i].layer.position = endPoint
             cells[i].layer.addAnimation(anim, forKey: nil)
