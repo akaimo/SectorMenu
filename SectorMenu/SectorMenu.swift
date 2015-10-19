@@ -268,7 +268,55 @@ public class SectorMenu: UIView {
     }
     
     private func clockwise() {
+        guard let btnPoint = cellCenter else {
+            return
+        }
         
+        let cells = cellArray()
+        for var i=0; i<cells.count; i++ {
+            let startPoint = cells[i].layer.position
+            let anim = CAKeyframeAnimation(keyPath: "position")
+            let atan: Double = Double(atan2(btnPoint.x - startPoint.x, btnPoint.y - startPoint.y))
+            let endPoint: CGPoint = CGPointMake(btnPoint.x + distance * CGFloat(cos(atan)),
+                                                btnPoint.y - distance * CGFloat(sin(atan)))
+            let value: [Array<CGFloat>] = [
+                [
+                    startPoint.x,
+                    startPoint.y
+                ],
+                [
+                    btnPoint.x + distance * CGFloat(cos(atan + M_PI_4 * 5/3)),
+                    btnPoint.y - distance * CGFloat(sin(atan + M_PI_4 * 5/3))
+                ],
+                [
+                    btnPoint.x + distance * CGFloat(cos(atan + M_PI_4 * 4/3)),
+                    btnPoint.y - distance * CGFloat(sin(atan + M_PI_4 * 4/3))
+                ],
+                [
+                    btnPoint.x + distance * CGFloat(cos(atan + M_PI_4)),
+                    btnPoint.y - distance * CGFloat(sin(atan + M_PI_4))
+                ],
+                [
+                    btnPoint.x + distance * CGFloat(cos(atan + M_PI_4 * 2/3)),
+                    btnPoint.y - distance * CGFloat(sin(atan + M_PI_4 * 2/3))
+                ],
+                [
+                    btnPoint.x + distance * CGFloat(cos(atan + M_PI_4 * 1/3)),
+                    btnPoint.y - distance * CGFloat(sin(atan + M_PI_4 * 1/3))
+                ],
+                [
+                    btnPoint.x + distance * CGFloat(cos(atan)),
+                    btnPoint.y - distance * CGFloat(sin(atan))
+                ]
+            ]
+            anim.values = value
+            anim.duration = 0.5
+            anim.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseIn)
+            anim.removedOnCompletion = true
+            
+            cells[i].layer.position = endPoint
+            cells[i].layer.addAnimation(anim, forKey: nil)
+        }
     }
     
     private func counterclockwise() {
