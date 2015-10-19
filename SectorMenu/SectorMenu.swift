@@ -277,8 +277,8 @@ public class SectorMenu: UIView {
             let startPoint = cells[i].layer.position
             let anim = CAKeyframeAnimation(keyPath: "position")
             let atan = atan2(startPoint.x - (cellCenter?.x)!, startPoint.y - (cellCenter?.y)!)
-            let endPoint: CGPoint = CGPointMake((cellCenter?.x)! + distance * CGFloat(cos(Double(atan) - M_PI_4)),
-                                                (cellCenter?.y)! - distance * CGFloat(sin(Double(atan) - M_PI_4)))
+            let endPoint: CGPoint = CGPointMake((cellCenter?.x)! + distance * CGFloat(cos(Double(atan))),
+                                                (cellCenter?.y)! - distance * CGFloat(sin(Double(atan))))
             let value: [Array<CGFloat>] = [
                 [
                     startPoint.x,
@@ -295,10 +295,23 @@ public class SectorMenu: UIView {
                 [
                     (cellCenter?.x)! + distance * CGFloat(cos(Double(atan) - M_PI_4)),
                     (cellCenter?.y)! - distance * CGFloat(sin(Double(atan) - M_PI_4))
+                ],
+                [
+                    (cellCenter?.x)! + distance * CGFloat(cos(Double(atan) - M_PI_4 * 2/3)),
+                    (cellCenter?.y)! - distance * CGFloat(sin(Double(atan) - M_PI_4 * 2/3))
+                ],
+                [
+                    (cellCenter?.x)! + distance * CGFloat(cos(Double(atan) - M_PI_4 * 1/3)),
+                    (cellCenter?.y)! - distance * CGFloat(sin(Double(atan) - M_PI_4 * 1/3))
+                ],
+                [
+                    (cellCenter?.x)! + distance * CGFloat(cos(atan)),
+                    (cellCenter?.y)! - distance * CGFloat(sin(atan))
                 ]
             ]
             anim.values = value
             anim.duration = 0.5
+            anim.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseIn)
             anim.removedOnCompletion = true
             
             cells[i].layer.position = endPoint
