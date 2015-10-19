@@ -108,6 +108,7 @@ public class SectorMenu: UIView {
     }
     
     internal func panGesture(sender: UIPanGestureRecognizer){
+        // TODO: no action in no area of cell
         let currentPoint = sender.translationInView(self)
         if let _ = panPointReference {
 //            print("currentPoint: \(currentPoint)")
@@ -171,12 +172,13 @@ public class SectorMenu: UIView {
     }
     
     private func openingCell(cells: [SectorMenuCell]) {
+        // TODO: start left side animation
         let radi = M_PI_2 * 1/4
         let firstTime = 0.15
         let animTime = 0.4
         
         for var i=0; i<cells.count; i++ {
-            // TODO: リファクタリング
+            // TODO: refactoing
             let startPoint: CGPoint = cells[i].layer.position
             
             let first = CABasicAnimation(keyPath: "position")
@@ -268,6 +270,7 @@ public class SectorMenu: UIView {
     }
     
     private func clockwise() {
+        // TODO: unify clockwise() and counterclockwise()
         guard let btnPoint = cellCenter else {
             return
         }
