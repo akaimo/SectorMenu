@@ -156,12 +156,12 @@ public class SectorMenu: UIView {
         
         let cells = cellArray()
         closingCell(cells)
-        circleView?.removeFromSuperview()
         setNeedsDisplay()
     }
     
     private func insertCell(cell: SectorMenuCell) {
         cell.color  = self.color
+        cell.alpha = 1.0
         cell.radius = self.frame.width * cellRadiusRatio
         cell.center = cellCenter!
         cell.actionButton = self
@@ -238,16 +238,25 @@ public class SectorMenu: UIView {
     
     private func closingCell(cells: [SectorMenuCell]) {
         // TODO: cell close animation
+        let duration = 0.3
         for var i=1; i<=cells.count; i++ {
             let cell = cells[i-1]
             cell.userInteractionEnabled = false
-            UIView.animateWithDuration(0.2,
+            UIView.animateWithDuration(duration,
                 animations: {() -> Void  in
                     cell.center = self.cellCenter!
+                    cell.alpha = 0.0
                 }, completion: {(Bool) -> Void in
                     cell.removeFromSuperview()
             })
         }
+        
+        UIView.animateWithDuration(duration,
+            animations: {() -> Void  in
+                circleView?.alpha = 0.0
+            }, completion: {(Bool) -> Void in
+                circleView?.removeFromSuperview()
+        })
         
         isClosed = true
     }
