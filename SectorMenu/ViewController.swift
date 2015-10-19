@@ -49,6 +49,7 @@ class ViewController: UIViewController, SectorMenuDataSource, SectorMenuDelegate
     
     func sectorMenu(sectorMenu: SectorMenu, didSelectItemAtIndex index: Int) {
         print("did Tapped! \(index)")
+        sectorMenu.close(index)
     }
     
 }

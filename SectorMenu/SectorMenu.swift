@@ -159,6 +159,15 @@ public class SectorMenu: UIView {
         setNeedsDisplay()
     }
     
+    public func close(index: Int) {
+        self.plusLayer.addAnimation(plusKeyframe(false), forKey: "plusRot")
+        self.plusRotation = 0
+        
+        let cells = cellArray()
+        closingCell(cells, index: index)
+        setNeedsDisplay()
+    }
+    
     private func insertCell(cell: SectorMenuCell) {
         cell.color  = self.color
         cell.alpha = 1.0
@@ -249,6 +258,40 @@ public class SectorMenu: UIView {
                 }, completion: {(Bool) -> Void in
                     cell.removeFromSuperview()
             })
+        }
+        
+        UIView.animateWithDuration(duration,
+            animations: {() -> Void  in
+                circleView?.alpha = 0.0
+            }, completion: {(Bool) -> Void in
+                circleView?.removeFromSuperview()
+        })
+        
+        isClosed = true
+    }
+    
+    private func closingCell(cells: [SectorMenuCell], index: Int) {
+        let duration = 0.3
+        for var i=1; i<=cells.count; i++ {
+            let cell = cells[i-1]
+            cell.userInteractionEnabled = false
+            if i-1 == index {
+                // TODO: fade out
+                let anim = CABasicAnimation(keyPath: "path")
+                anim.toValue = CGPathCreateWithEllipseInRect(CGRectInset(cell.bounds, -15, -15), nil)
+                anim.duration = duration
+                anim.removedOnCompletion = true
+                anim.fillMode = kCAFillModeForwards
+                cell.circleLayer.addAnimation(anim, forKey: nil)
+            } else {
+                UIView.animateWithDuration(duration,
+                    animations: {() -> Void  in
+                        cell.center = self.cellCenter!
+                        cell.alpha = 0.0
+                    }, completion: {(Bool) -> Void in
+                        cell.removeFromSuperview()
+                })
+            }
         }
         
         UIView.animateWithDuration(duration,
