@@ -272,41 +272,45 @@ public class SectorMenu: UIView {
     }
     
     private func counterclockwise() {
+        guard let btnPoint = cellCenter else {
+            return
+        }
+        
         let cells = cellArray()
         for var i=0; i<cells.count; i++ {
             let startPoint = cells[i].layer.position
             let anim = CAKeyframeAnimation(keyPath: "position")
-            let atan = atan2(startPoint.x - (cellCenter?.x)!, startPoint.y - (cellCenter?.y)!)
-            let endPoint: CGPoint = CGPointMake((cellCenter?.x)! + distance * CGFloat(cos(Double(atan))),
-                                                (cellCenter?.y)! - distance * CGFloat(sin(Double(atan))))
+            let atan: Double = Double(atan2(startPoint.x - btnPoint.x, startPoint.y - btnPoint.y))
+            let endPoint: CGPoint = CGPointMake(btnPoint.x + distance * CGFloat(cos(atan)),
+                                                btnPoint.y - distance * CGFloat(sin(atan)))
             let value: [Array<CGFloat>] = [
                 [
                     startPoint.x,
                     startPoint.y
                 ],
                 [
-                    (cellCenter?.x)! + distance * CGFloat(cos(Double(atan) - M_PI_4 * 5/3)),
-                    (cellCenter?.y)! - distance * CGFloat(sin(Double(atan) - M_PI_4 * 5/3))
+                    btnPoint.x + distance * CGFloat(cos(atan - M_PI_4 * 5/3)),
+                    btnPoint.y - distance * CGFloat(sin(atan - M_PI_4 * 5/3))
                 ],
                 [
-                    (cellCenter?.x)! + distance * CGFloat(cos(Double(atan) - M_PI_4 * 4/3)),
-                    (cellCenter?.y)! - distance * CGFloat(sin(Double(atan) - M_PI_4 * 4/3))
+                    btnPoint.x + distance * CGFloat(cos(atan - M_PI_4 * 4/3)),
+                    btnPoint.y - distance * CGFloat(sin(atan - M_PI_4 * 4/3))
                 ],
                 [
-                    (cellCenter?.x)! + distance * CGFloat(cos(Double(atan) - M_PI_4)),
-                    (cellCenter?.y)! - distance * CGFloat(sin(Double(atan) - M_PI_4))
+                    btnPoint.x + distance * CGFloat(cos(atan - M_PI_4)),
+                    btnPoint.y - distance * CGFloat(sin(atan - M_PI_4))
                 ],
                 [
-                    (cellCenter?.x)! + distance * CGFloat(cos(Double(atan) - M_PI_4 * 2/3)),
-                    (cellCenter?.y)! - distance * CGFloat(sin(Double(atan) - M_PI_4 * 2/3))
+                    btnPoint.x + distance * CGFloat(cos(atan - M_PI_4 * 2/3)),
+                    btnPoint.y - distance * CGFloat(sin(atan - M_PI_4 * 2/3))
                 ],
                 [
-                    (cellCenter?.x)! + distance * CGFloat(cos(Double(atan) - M_PI_4 * 1/3)),
-                    (cellCenter?.y)! - distance * CGFloat(sin(Double(atan) - M_PI_4 * 1/3))
+                    btnPoint.x + distance * CGFloat(cos(atan - M_PI_4 * 1/3)),
+                    btnPoint.y - distance * CGFloat(sin(atan - M_PI_4 * 1/3))
                 ],
                 [
-                    (cellCenter?.x)! + distance * CGFloat(cos(atan)),
-                    (cellCenter?.y)! - distance * CGFloat(sin(atan))
+                    btnPoint.x + distance * CGFloat(cos(atan)),
+                    btnPoint.y - distance * CGFloat(sin(atan))
                 ]
             ]
             anim.values = value
