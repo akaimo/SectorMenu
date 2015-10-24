@@ -234,7 +234,7 @@ public class SectorMenu: UIView {
         circleView?.alpha = 0.0
         UIView.animateWithDuration(firstTime + animTime,
             animations: {() -> Void  in
-                circleView?.alpha = 1.0
+                self.circleView?.alpha = 1.0
         })
         
         
@@ -262,9 +262,9 @@ public class SectorMenu: UIView {
         
         UIView.animateWithDuration(duration,
             animations: {() -> Void  in
-                circleView?.alpha = 0.0
+                self.circleView?.alpha = 0.0
             }, completion: {(Bool) -> Void in
-                circleView?.removeFromSuperview()
+                self.circleView?.removeFromSuperview()
         })
         
         isClosed = true
@@ -276,13 +276,26 @@ public class SectorMenu: UIView {
             let cell = cells[i-1]
             cell.userInteractionEnabled = false
             if i-1 == index {
-                // TODO: fade out
-                let anim = CABasicAnimation(keyPath: "path")
-                anim.toValue = CGPathCreateWithEllipseInRect(CGRectInset(cell.bounds, -15, -15), nil)
-                anim.duration = duration
-                anim.removedOnCompletion = true
-                anim.fillMode = kCAFillModeForwards
-                cell.circleLayer.addAnimation(anim, forKey: nil)
+                let circle = CABasicAnimation(keyPath: "path")
+                circle.toValue = CGPathCreateWithEllipseInRect(CGRectInset(cell.bounds, -25, -25), nil)
+                circle.duration = duration
+                circle.removedOnCompletion = true
+                circle.fillMode = kCAFillModeForwards
+                
+                let fade = CABasicAnimation(keyPath: "opacity")
+                fade.toValue = 0.0
+                fade.duration = duration
+                fade.removedOnCompletion = true
+                fade.fillMode = kCAFillModeForwards
+                
+                let group = CAAnimationGroup()
+                group.animations = [circle, fade]
+                group.duration = duration
+                group.removedOnCompletion = false
+                group.fillMode = kCAFillModeForwards
+                group.delegate = self
+                
+                cell.circleLayer.addAnimation(group, forKey: "didTapedClose")
             } else {
                 UIView.animateWithDuration(duration,
                     animations: {() -> Void  in
@@ -296,9 +309,9 @@ public class SectorMenu: UIView {
         
         UIView.animateWithDuration(duration,
             animations: {() -> Void  in
-                circleView?.alpha = 0.0
+                self.circleView?.alpha = 0.0
             }, completion: {(Bool) -> Void in
-                circleView?.removeFromSuperview()
+                self.circleView?.removeFromSuperview()
         })
         
         isClosed = true
@@ -460,7 +473,6 @@ public class SectorMenu: UIView {
         anim.duration = closed ? 0.5 : 0.2
         anim.removedOnCompletion = true
         anim.fillMode = kCAFillModeForwards
-        anim.delegate = self
         return anim
     }
     
