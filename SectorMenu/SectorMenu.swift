@@ -110,11 +110,10 @@ public class SectorMenu: UIView {
     internal func panGesture(sender: UIPanGestureRecognizer){
         // TODO: no action in no area of cell
         let currentPoint = sender.translationInView(self)
-        if let _ = panPointReference {
-        } else if sender.state == .Began {
+        if sender.state == .Began {
             panPointReference = currentPoint
         }
-        
+        // TODO: support right side swipe
         if sender.state == .Ended {
             if let point = panPointReference {
                 if currentPoint.y > point.y {   // down
@@ -184,7 +183,6 @@ public class SectorMenu: UIView {
         let animTime = 0.4
         
         for var i=0; i<cells.count; i++ {
-            // TODO: refactoing
             let startPoint: CGPoint = cells[i].layer.position
             
             let first = CABasicAnimation(keyPath: "position")
@@ -246,7 +244,6 @@ public class SectorMenu: UIView {
     }
     
     private func closingCell(cells: [SectorMenuCell]) {
-        // TODO: cell close animation
         let duration = 0.3
         for var i=1; i<=cells.count; i++ {
             let cell = cells[i-1]
