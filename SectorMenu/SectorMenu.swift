@@ -39,6 +39,7 @@ public class SectorMenu: UIView {
     public var isClosed = true
     private var isPan = false
     private var panPointReference: CGPoint?
+    private var currentArea = 1
     
     public var color: UIColor = UIColor(red: 82/255.0, green: 112/255.0, blue: 235/255.0, alpha: 1.0)
     
@@ -83,6 +84,25 @@ public class SectorMenu: UIView {
         return result
     }
     
+    private func areaCount() -> Int? {
+        if let source = dataSource {
+            let num = source.numberOfCells(self)
+            switch num {
+                case 1,2,3:
+                    return 1
+                case 4,5:
+                    return 2
+                case 6,7:
+                    return 3
+                case 8:
+                    return 4
+                default:
+                    return nil
+            }
+        }
+        return nil
+    }
+    
     
     
     //MARK: tapAction
@@ -109,6 +129,10 @@ public class SectorMenu: UIView {
     
     internal func panGesture(sender: UIPanGestureRecognizer){
         // TODO: no action in no area of cell
+        guard let totalArea = areaCount() else {
+            return
+        }
+        
         let currentPoint = sender.translationInView(self)
         if sender.state == .Began {
             panPointReference = currentPoint
@@ -117,9 +141,19 @@ public class SectorMenu: UIView {
         if sender.state == .Ended {
             if let point = panPointReference {
                 if currentPoint.y > point.y {   // down
-                    counterclockwise()
+                    if currentArea < totalArea || totalArea == 4 {
+                        counterclockwise()
+                        currentArea++
+                    } else {
+                        print("no")
+                    }
                 } else {                        // up
-                    clockwise()
+                    if currentArea <= totalArea && currentArea > 1 || totalArea == 4 {
+                        clockwise()
+                        currentArea--
+                    } else {
+                        print("no")
+                    }
                 }
             }
             panPointReference = nil
@@ -131,6 +165,7 @@ public class SectorMenu: UIView {
     public func open() {
         self.plusLayer.addAnimation(plusKeyframe(true), forKey: "plusRot")
         self.plusRotation = CGFloat(M_PI * 0.25) // 45 degree
+        currentArea = 1
         
         let cells = cellArray()
         for cell in cells {

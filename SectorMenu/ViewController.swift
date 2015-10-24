@@ -28,8 +28,8 @@ class ViewController: UIViewController, SectorMenuDataSource, SectorMenuDelegate
         cells.append(SectorMenuCell(icon: UIImage(named: "Place")!))
         cells.append(SectorMenuCell(icon: UIImage(named: "System")!))
         cells.append(SectorMenuCell(icon: UIImage(named: "Place")!))
-        cells.append(SectorMenuCell(icon: UIImage(named: "Place")!))
-        cells.append(SectorMenuCell(icon: UIImage(named: "Place")!))
+//        cells.append(SectorMenuCell(icon: UIImage(named: "Place")!))
+//        cells.append(SectorMenuCell(icon: UIImage(named: "Place")!))
     }
 
     override func didReceiveMemoryWarning() {
