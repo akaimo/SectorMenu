@@ -423,6 +423,17 @@ public class SectorMenu: UIView {
     }
     
     
+    // MARK: animation delegate
+    override public func animationDidStop(anim: CAAnimation, finished flag: Bool) {
+        let cells = cellArray()
+        for cell in cells {
+            if anim == cell.circleLayer.animationForKey("didTapedClose") {
+                cell.circleLayer.removeAnimationForKey("didTapedClose")
+                cell.removeFromSuperview()
+            }
+        }
+    }
+    
     
     // MARK: layer
     private func drawPlus(rotation: CGFloat) {
@@ -545,15 +556,4 @@ public class SectorMenu: UIView {
         
         return super.hitTest(point, withEvent: event)
     }
-    
-    override public func animationDidStop(anim: CAAnimation, finished flag: Bool) {
-        let cells = cellArray()
-        for cell in cells {
-            if anim == cell.circleLayer.animationForKey("didTapedClose") {
-                cell.circleLayer.removeAnimationForKey("didTapedClose")
-                cell.removeFromSuperview()
-            }
-        }
-    }
-
 }
