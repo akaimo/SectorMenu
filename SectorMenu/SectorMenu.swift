@@ -539,6 +539,10 @@ public class SectorMenu: UIView {
             }
         }
         
+        if CGRectContainsPoint(actionBtn.bounds, point) {   // action button tap
+            isPan = false
+        }
+        
         return super.hitTest(point, withEvent: event)
     }
     
